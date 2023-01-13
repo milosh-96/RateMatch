@@ -38,7 +38,7 @@ namespace RateMatch.Mvc.Controllers
                     MatchName = "Necaxa - Atletico de San Luis",
                     MatchResult = "2:3",
                     Sport = "Football",
-                    Competition = "Coppa Italia",
+                    Competition = "Liga MX",
                     PlayedAt = new DateTime(2023, 1, 11, 19, 45, 00),
                     Reviews = new List<MatchReview>(){
                         new MatchReview(){
