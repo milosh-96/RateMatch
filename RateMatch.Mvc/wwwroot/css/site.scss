@@ -1,4 +1,4 @@
-﻿html {
+html {
   font-size: 14px;
 }
 
@@ -7,6 +7,7 @@
     font-size: 16px;
   }
 }
+
 html {
   position: relative;
   min-height: 100%;
@@ -14,5 +15,7 @@ html {
 
 body {
   margin-bottom: 60px;
-  background: linear-gradient(#ccc, #fff 45%, #ccc);
+  }
+.nav{
+  background:linear-gradient(#ccc,#fff 25%,#ccc);
 }
