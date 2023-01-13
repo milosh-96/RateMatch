@@ -71,6 +71,7 @@ namespace RateMatch.Mvc.Areas.Api.Controllers
         [HttpGet("{id}")]
         public List<SportsMatch> Get(int id)
         {
+            // temporaraly use like this!!!//
             return this.Get().Where(x=>x.Id==1).ToList();
         }
 

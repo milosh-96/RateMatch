@@ -9,3 +9,4 @@
         public static string AssetsUrl { get; set; } = "https://uploads.rate-match.com";
     }
 }
+
