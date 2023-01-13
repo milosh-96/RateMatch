@@ -1,8 +1,42 @@
-﻿@{
+﻿@using RateMatch.Mvc.Data;
+@model List<SportsMatch>
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div>
+    <div class="row">
+        <div class="col col-12">
+            <h2>Welcome to Rate Match!</h2>
+            <p>You can add comment on available matches or submit new matches.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col col-12">
+            <h3>Recent Matches</h3>
+        </div>
+        @foreach (var item in Model)
+        {
+            <div class="col col-md-4">
+                <div class="card" style="width: 100%">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.MatchName @item.MatchResult</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">@item.Competition</h6>
+                        @if (item.Reviews.Count > 0)
+                        {
+                            <p class="card-text">
+                                <strong style="color:orange">
+                                    @item.Reviews.FirstOrDefault().ReviewRating
+                                </strong> - <span>@item.Reviews.FirstOrDefault().ReviewContent</span>
+                            </p>
+                        }
+                        <a href="#" class="card-link">Reviews</a>
+                        <a href="#" class="card-link">Match Highlights (external)</a>
+                    </div>
+                </div>
+                </div>
+        }
+    </div>
+    
 </div>
