@@ -1,20 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RateMatch.Mvc.Data;
-using RateMatch.Mvc.Models;
-using System.Diagnostics;
 
-namespace RateMatch.Mvc.Controllers
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+
+namespace RateMatch.Mvc.Areas.Api.Controllers
 {
-    public class HomeController : Controller
+    [Area("Api")]
+    [Route("{area}/[controller]")]
+    [ApiController]
+    public class MatchesController : ControllerBase
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
-        public IActionResult Index()
+        // GET: api/<MatchesController>
+        [HttpGet]
+        public List<SportsMatch> Get()
         {
             List<SportsMatch> matches = new List<SportsMatch>(){
                 new SportsMatch() {
@@ -34,7 +32,7 @@ namespace RateMatch.Mvc.Controllers
                     },
                 },
                 new SportsMatch() {
-                    Id = 1,
+                    Id = 2,
                     MatchName = "Necaxa - Atletico de San Luis",
                     MatchResult = "2:3",
                     Sport = "Football",
@@ -50,7 +48,7 @@ namespace RateMatch.Mvc.Controllers
                     }
                 },
                 new SportsMatch(){
-                    Id = 1,
+                    Id = 3,
                     MatchName = "Torino - Milan",
                     MatchResult = "0:1",
                     Sport = "Football",
@@ -66,18 +64,33 @@ namespace RateMatch.Mvc.Controllers
                     }
                 }
             };
-            return View(matches);
+            return matches;
         }
 
-        public IActionResult Privacy()
+        // GET api/<MatchesController>/5
+        [HttpGet("{id}")]
+        public List<SportsMatch> Get(int id)
         {
-            return View();
+            // temporaraly use like this!!!//
+            return this.Get().Where(x=>x.Id==1).ToList();
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+        // POST api/<MatchesController>
+        [HttpPost]
+        public void Post([FromBody] string value)
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        // PUT api/<MatchesController>/5
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody] string value)
+        {
+        }
+
+        // DELETE api/<MatchesController>/5
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
         }
     }
 }

@@ -8,17 +8,31 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="compilerconfig.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.12" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.12" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.12" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.13" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.12" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.11" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.8" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Api\Data\" />
+    <Folder Include="Areas\Api\Models\" />
+    <Folder Include="Areas\Api\Views\" />
     <Folder Include="Data\Migrations\" />
     <Folder Include="Models\NewFolder\" />
+    <Folder Include="NewFolder\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="compilerconfig.json" />
   </ItemGroup>
 
 </Project>

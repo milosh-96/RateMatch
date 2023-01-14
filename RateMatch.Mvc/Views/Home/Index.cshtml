@@ -21,7 +21,10 @@
             <div class="col col-md-4">
                 <div class="card" style="width: 100%">
                     <div class="card-body">
-                        <h5 class="card-title">@item.MatchName @item.MatchResult</h5>
+                        <h5 class="card-title">
+                            <a asp-action="Details"
+                                asp-route-id="@item.Id">@item.MatchName @item.MatchResult</a>
+                        </h5>
                         <h6 class="card-subtitle mb-2 text-muted">@item.Competition</h6>
                         @if (item.Reviews.Count > 0)
                         {
@@ -31,8 +34,8 @@
                                 </strong> - <span>@item.Reviews.FirstOrDefault().ReviewContent</span>
                             </p>
                         }
-                        <a href="#" class="card-link">Reviews</a>
-                        <a href="#" class="card-link">Match Highlights (external)</a>
+                        <a href="#" class="btn btn-sm btn-primary">Reviews</a>
+                        <a href="#" class="btn btn-sm btn-primary">Match Highlights (external)</a>
                     </div>
                 </div>
                 </div>
