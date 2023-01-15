@@ -11,6 +11,6 @@
         public DateTime PlayedAt { get; set; } = DateTime.UtcNow;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-        public List<MatchReview>    Reviews { get; set; } = new List<MatchReview>();
+        public List<MatchReview> Reviews { get; set; } = new List<MatchReview>();
     }
 }
