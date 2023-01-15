@@ -1,4 +1,20 @@
 {
   "version": "1.0",
-  "defaultProvider": "cdnjs"
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "react@18.2.0",
+      "files": [
+        "umd/react.production.min.js"
+      ],
+      "destination": "wwwroot/lib/reactjs"
+    },
+    {
+      "library": "react-dom@18.2.0",
+      "files": [
+        "umd/react-dom.production.min.js"
+      ],
+      "destination": "wwwroot/lib/reactjs"
+    }
+  ]
 }
