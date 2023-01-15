@@ -14,6 +14,7 @@ namespace RateMatch.Mvc.Areas.Api.Controllers
         [HttpGet]
         public List<SportsMatch> Get()
         {
+            //Thread.Sleep(5000);
             List<SportsMatch> matches = new List<SportsMatch>(){
                 new SportsMatch() {
                     Id = 1,

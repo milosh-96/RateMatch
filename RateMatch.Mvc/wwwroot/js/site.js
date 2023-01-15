@@ -16,36 +16,75 @@ class MatchItemsView extends React.Component {
         };
     }
     componentDidMount() {
-        fetch("/api/matches")
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    this.setState({
-                        isLoaded: true,
-                        items: result
-                    });
-                },
-                // Note: it's important to handle errors here
-                // instead of a catch() block so that we don't swallow
-                // exceptions from actual bugs in components.
-                (error) => {
-                    this.setState({
-                        isLoaded: true,
-                        error
-                    });
-                }
-            )
+            fetch("/api/matches")
+                .then(res => res.json())
+                .then(
+                    (result) => {
+                        this.setState({
+                            isLoaded: true,
+                            items: result
+                        });
+                    },
+                    // Note: it's important to handle errors here
+                    // instead of a catch() block so that we don't swallow
+                    // exceptions from actual bugs in components.
+                    (error) => {
+                        this.setState({
+                            isLoaded: true,
+                            error
+                        });
+                    }
+                )
     }
     render() {
-        return (
-            <div>
-                {this.state.items.map((item,index) => (
-                    <React.Fragment key={item.id}>
-                        <MatchItemCard item={item}></MatchItemCard>
-                    </React.Fragment>
-                ))}
-            </div>
+        if (this.state.error != null) {
+           return (<div>ERROR!</div>)
+        }
+        else if (!this.state.isLoaded) {
+            return (<div>
+                <div class="ph-item">
+                    <div class="ph-col-12">
+                        <div class="ph-picture"></div>
+                        <div class="ph-row">
+                            <div class="ph-col-12 big"></div>
+                            <div class="ph-col-4 empty big"></div>
+                            <div class="ph-col-4 empty big"></div>
+                            <div class="ph-col-2 big"></div>
+                            <div class="ph-col-2 big"></div>
+                            <div class="ph-col-12 empty"></div>
+                            <div class="ph-col-12 empty"></div>
+                            <div class="ph-col-12"></div>
+                        </div>
+                    </div>
+                </div><div class="ph-item">
+                    <div class="ph-col-12">
+                        <div class="ph-picture"></div>
+                        <div class="ph-row">
+                            <div class="ph-col-12 big"></div>
+                            <div class="ph-col-4 empty big"></div>
+                            <div class="ph-col-4 empty big"></div>
+                            <div class="ph-col-2 big"></div>
+                            <div class="ph-col-2 big"></div>
+                            <div class="ph-col-12 empty"></div>
+                            <div class="ph-col-12 empty"></div>
+                            <div class="ph-col-12"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>)
+        }
+        else {
+            return (
+                <div>
+
+                    {this.state.items.map((item, index) => (
+                        <React.Fragment key={item.id}>
+                            <MatchItemCard item={item}></MatchItemCard>
+                        </React.Fragment>
+                    ))}
+                </div>
             )
+        }
     }
 }
 
