@@ -43,9 +43,11 @@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/lib/reactjs/umd/react.production.min.js" asp-append-version="true"></script>
-    <script src="~/lib/reactjs/umd/react-dom.production.min.js" asp-append-version="true"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/reactjs/umd/react.development.min.js" asp-append-version="true"></script>
+    <script src="~/lib/reactjs/umd/react-dom.development.min.js" asp-append-version="true"></script>
+    <script src="~/lib/babel/babel.min.js" asp-append-version="true"></script>
+
+    <script type="text/babel" src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

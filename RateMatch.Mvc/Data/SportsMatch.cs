@@ -3,8 +3,8 @@
     public class SportsMatch
     {
         public int Id { get; set; }
-        public string MatchName = "";
-        public string MatchResult = "0:0";
+        public string MatchName { get; set; } = "";
+        public string MatchResult { get; set; } = "0:0";
         public string Sport { get; set; } = "";
         public string Competition { get; set; } = "";
 

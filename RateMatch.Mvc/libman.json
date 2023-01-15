@@ -5,16 +5,25 @@
     {
       "library": "react@18.2.0",
       "files": [
-        "umd/react.production.min.js"
+        "umd/react.production.min.js",
+        "umd/react.development.min.js"
       ],
       "destination": "wwwroot/lib/reactjs"
     },
     {
       "library": "react-dom@18.2.0",
       "files": [
-        "umd/react-dom.production.min.js"
+        "umd/react-dom.production.min.js",
+        "umd/react-dom.development.min.js"
       ],
       "destination": "wwwroot/lib/reactjs"
+    },
+    {
+      "library": "babel-standalone@7.20.12",
+      "files": [
+        "babel.min.js"
+      ],
+      "destination": "wwwroot/lib/babel"
     }
   ]
 }
