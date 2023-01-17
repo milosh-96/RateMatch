@@ -41,37 +41,7 @@ class MatchItemsView extends React.Component {
            return (<div>ERROR!</div>)
         }
         else if (!this.state.isLoaded) {
-            return (<div>
-                <div class="ph-item">
-                    <div class="ph-col-12">
-                        <div class="ph-picture"></div>
-                        <div class="ph-row">
-                            <div class="ph-col-12 big"></div>
-                            <div class="ph-col-4 empty big"></div>
-                            <div class="ph-col-4 empty big"></div>
-                            <div class="ph-col-2 big"></div>
-                            <div class="ph-col-2 big"></div>
-                            <div class="ph-col-12 empty"></div>
-                            <div class="ph-col-12 empty"></div>
-                            <div class="ph-col-12"></div>
-                        </div>
-                    </div>
-                </div><div class="ph-item">
-                    <div class="ph-col-12">
-                        <div class="ph-picture"></div>
-                        <div class="ph-row">
-                            <div class="ph-col-12 big"></div>
-                            <div class="ph-col-4 empty big"></div>
-                            <div class="ph-col-4 empty big"></div>
-                            <div class="ph-col-2 big"></div>
-                            <div class="ph-col-2 big"></div>
-                            <div class="ph-col-12 empty"></div>
-                            <div class="ph-col-12 empty"></div>
-                            <div class="ph-col-12"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>)
+            return ("");
         }
         else {
             return (
@@ -98,7 +68,7 @@ class MatchItemCard extends React.Component {
             <div className="card" style={{width: "100%"}}>
                 <div className="card-body">
                     <h5 className="card-title">
-                        <a href="">{this.props.item.matchName} {this.props.item.matchResult}</a>
+                        <a href={this.props.item.url}>{this.props.item.matchName} {this.props.item.matchResult}</a>
                     </h5>
                
                     <a href="#" className="btn btn-sm btn-primary">Reviews</a>

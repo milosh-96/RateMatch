@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RateMatch.Mvc.Data;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -10,76 +11,36 @@ namespace RateMatch.Mvc.Areas.Api.Controllers
     [ApiController]
     public class MatchesController : ControllerBase
     {
+        private readonly ApplicationDbContext _context;
+
+        public MatchesController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
         // GET: api/<MatchesController>
         [HttpGet]
-        public List<SportsMatch> Get()
+        public async Task<List<SportsMatch>> Get()
         {
-            //Thread.Sleep(5000);
-            List<SportsMatch> matches = new List<SportsMatch>(){
-                new SportsMatch() {
-                    Id = 1,
-                    MatchName = "Inter - Parma",
-                    MatchResult = "2:1 (after extra time)",
-                    Sport = "Football",
-                    Competition = "Coppa Italia",
-                    PlayedAt = new DateTime(2023, 1, 11, 19, 45, 00),
-                    Reviews = new List<MatchReview>(){
-                        new MatchReview(){
-                            Id = 1,
-                            ReviewContent = "This was very good match! Thank god Inter won!",
-                            ReviewRating = 4,
-                            UserId = 1
-                        }
-                    },
-                },
-                new SportsMatch() {
-                    Id = 2,
-                    MatchName = "Necaxa - Atletico de San Luis",
-                    MatchResult = "2:3",
-                    Sport = "Football",
-                    Competition = "Liga MX",
-                    PlayedAt = new DateTime(2023, 1, 11, 19, 45, 00),
-                    Reviews = new List<MatchReview>(){
-                        new MatchReview(){
-                            Id = 1,
-                            ReviewContent = "Fun match but awful Nexaxa defending!!",
-                            ReviewRating = 5,
-                            UserId = 1
-                        }
-                    }
-                },
-                new SportsMatch(){
-                    Id = 3,
-                    MatchName = "Torino - Milan",
-                    MatchResult = "0:1",
-                    Sport = "Football",
-                    Competition = "Coppa Italia",
-                    PlayedAt = new DateTime(2023, 1, 12, 19, 45, 00),
-                    Reviews = new List<MatchReview>(){
-                        new MatchReview(){
-                            Id = 1,
-                            ReviewContent = "LOL Milan! Torino are through!",
-                            ReviewRating = 5,
-                            UserId = 1
-                        }
-                    }
-                }
-            };
+            List<SportsMatch> matches = await _context.SportsMatches.ToListAsync();
+            matches.ForEach(x => x.Url = Url.Action(
+                        "Details", "SportsMatches",
+                        new { id = x.Id, slug = x.Slug, area=""}));
             return matches;
         }
 
         // GET api/<MatchesController>/5
         [HttpGet("{id}")]
-        public List<SportsMatch> Get(int id)
+        public async Task<SportsMatch?> Get(int id)
         {
-            // temporaraly use like this!!!//
-            return this.Get().Where(x=>x.Id==1).ToList();
+            return await _context.SportsMatches.Where(x => x.Id == id).Include(x=>x.Reviews).FirstOrDefaultAsync();
         }
 
         // POST api/<MatchesController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public SportsMatch Post([FromBody] SportsMatchDto value)
         {
+            return new SportsMatch() { MatchName=value.MatchName};
         }
 
         // PUT api/<MatchesController>/5
