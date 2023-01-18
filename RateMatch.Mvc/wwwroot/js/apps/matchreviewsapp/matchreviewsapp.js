@@ -9,15 +9,17 @@ class MatchReviewsApp extends React.Component {
     }
     render() {
         return (<div>
-            <button onClick={this.addNewItem.bind(this)}>Add</button>
+            <PostMatchReview itemSubmitted={this.addNewItem.bind(this)}></PostMatchReview>
             <MatchReveiwsListView items={this.state.items}>
             </MatchReveiwsListView></div>
         )
     }
-    addNewItem() {
+    addNewItem(value) {
         this.setState(prevState => ({
-            items: ["I'm new :)", ...prevState.items]
+            items: [value, ...prevState.items]
         }));
+        //
+        
     }
 }
 
@@ -44,6 +46,28 @@ class MatchReviewsListViewItem extends React.Component {
     }
     render() {
         return (<div>{this.props.item}</div>)
+    }
+}
+
+class PostMatchReview extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { reviewContent: "" };
+    }
+    handleReviewContentChange(event) { this.setState({ reviewContent: event.target.value }); }
+    render() {
+        return (<div className="form-group">
+            <input
+                type="text"
+                value={this.state.reviewContent}
+                onChange={this.handleReviewContentChange.bind(this)}
+                style={{ padding: "3px" }} />
+            <button className="btn btn-primary rounded-0" onClick={this.addNewItem.bind(this)}>Submit</button>
+        </div>)
+    }
+    addNewItem() {
+        this.props.itemSubmitted(this.state.reviewContent);
+        this.setState({ reviewContent: "" });
     }
 }
 
