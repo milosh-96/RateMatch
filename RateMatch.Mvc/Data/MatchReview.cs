@@ -1,23 +1,42 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Build.Framework;
+using Newtonsoft.Json;
 using RateMatch.Mvc.Data.IdentityEntities;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RateMatch.Mvc.Data
 {
     public class MatchReview
     {
         public int Id { get; set; }
+
         public string ReviewContent { get; set; } = "";
         public int ReviewRating { get; set; } = 5;
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
 
+        [Column(TypeName ="varchar(256)")]
+        public string? AuthorName { get; set; } = "Guest";
         public int UserId { get; set; }
-        public ApplicationUser?  User { get; set; }
+        public ApplicationUser? User { get; set; }
 
         public int MatchId { get; set; }
 
         [JsonIgnore]
         public SportsMatch? Match { get; set; }
+    }
+
+
+    public class MatchReviewDto
+    {
+        [Required]
+        public string ReviewContent { get; set; } = "";
+
+        [Required]
+        public int ReviewRating { get; set; } = 5;
+
+        [Required]
+        public string AuthorName { get; set; } = "Guest";
+      
     }
 }

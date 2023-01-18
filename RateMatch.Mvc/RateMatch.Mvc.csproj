@@ -32,7 +32,6 @@
     <Folder Include="Areas\Api\Models\" />
     <Folder Include="Areas\Api\Views\" />
     <Folder Include="Data\Migrations\" />
-    <Folder Include="Models\NewFolder\" />
     <Folder Include="NewFolder\" />
   </ItemGroup>
 

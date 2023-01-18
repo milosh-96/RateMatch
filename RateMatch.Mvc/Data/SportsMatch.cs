@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc.Routing;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Policy;
 
@@ -11,12 +12,16 @@ namespace RateMatch.Mvc.Data
 
         [Column(TypeName ="varchar(256)")]
         public string Slug { get; set; } = "";
+
         [Column(TypeName = "varchar(256)")]
         public string MatchName { get; set; } = "";
+
         [Column(TypeName = "varchar(256)")]
         public string MatchResult { get; set; } = "0:0";
+
         [Column(TypeName = "varchar(256)")]
         public string Sport { get; set; } = "";
+
         [Column(TypeName = "varchar(256)")]
         public string Competition { get; set; } = "";
 
@@ -33,10 +38,15 @@ namespace RateMatch.Mvc.Data
 
     public class SportsMatchDto
     {
+        [Required]
         public string MatchName { get; set; } = "";
+        [Required]
         public string MatchResult { get; set; } = "";
+        [Required]
         public string Sport { get; set; } = "";
+        [Required]
         public string Competition { get; set; } = "";
+        [Required]
         public string PlayedAt { get; set; } = "";
 
        

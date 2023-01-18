@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RateMatch.Mvc.Data;
+using RateMatch.Mvc.Models.SportsMatches;
 
 namespace RateMatch.Mvc.Controllers
 {
@@ -38,8 +39,12 @@ namespace RateMatch.Mvc.Controllers
             {
                 return NotFound();
             }
-
-            return View(sportsMatch);
+            SportsMatchDetailsViewModel viewModel = new SportsMatchDetailsViewModel()
+            {
+                Item = sportsMatch
+            };
+            ViewData["Title"] = sportsMatch.MatchName + " ("+sportsMatch.Sport + ")";
+            return View(viewModel);
         }
 
         // GET: SportsMatches/Create
