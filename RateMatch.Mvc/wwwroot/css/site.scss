@@ -63,3 +63,12 @@ footer {
 #page {
     //background:#eee;
 }
+
+.reviews-rate-widget {
+    .review-star {
+        color:#ccc;
+        &:hover {
+            color:orange;
+        }
+    }
+}

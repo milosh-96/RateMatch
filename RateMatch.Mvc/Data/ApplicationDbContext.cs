@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using RateMatch.Mvc.Data.IdentityEntities;
 using RateMatch.Mvc.Data;
+using Microsoft.EntityFrameworkCore.ValueGeneration;
 
 namespace RateMatch.Mvc.Data
 {
@@ -11,6 +12,15 @@ namespace RateMatch.Mvc.Data
         {
         }
 
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder
+                .Entity<MatchReview>()
+                .Property(b => b.EditKey)
+                .HasValueGenerator<GuidValueGenerator>();
+        }
         public DbSet<SportsMatch> SportsMatches => Set<SportsMatch>();
         public DbSet<MatchReview> MatchReviews => Set<MatchReview>();
     }

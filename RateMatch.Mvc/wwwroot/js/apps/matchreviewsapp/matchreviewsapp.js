@@ -5,11 +5,29 @@ const e = React.createElement;
 class MatchReviewsApp extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { items: ["What a great match!","Amazing!!!"] };
+        this.state = {
+            items: [
+                {
+                    reviewContent: "What a great match!",
+                    reviewRating:5
+                },
+                {
+                    reviewContent: "What a great match 1!",
+                    reviewRating:5
+                },
+                {
+                    reviewContent: "What a great match 2 !",
+                    reviewRating:5
+                },
+               
+            ]
+        };
     }
     render() {
         return (<div>
+            <ReviewRate reviewRating="5"></ReviewRate>
             <PostMatchReview itemSubmitted={this.addNewItem.bind(this)}></PostMatchReview>
+            
             <MatchReveiwsListView items={this.state.items}>
             </MatchReveiwsListView></div>
         )
@@ -45,14 +63,32 @@ class MatchReviewsListViewItem extends React.Component {
         super(props);
     }
     render() {
-        return (<div>{this.props.item}</div>)
+        return (<div>{this.props.item.reviewContent} ({this.props.item.reviewRating})</div>)
+    }
+}
+
+class ReviewRate extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+    render() {
+        let output = [];
+        for (let i = 0; i < 5; i++) {
+            output.push(<React.Fragment key={i}>
+                <div className="d-inline review-star"><i className={'fa-solid fa-star'}></i></div>
+            </React.Fragment>);
+        }
+        return (<div class="reviews-rate-widget">
+            {output }
+        </div>
+        )
     }
 }
 
 class PostMatchReview extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { reviewContent: "" };
+        this.state = { reviewContent: "",reviewRating: 5};
     }
     handleReviewContentChange(event) { this.setState({ reviewContent: event.target.value }); }
     render() {

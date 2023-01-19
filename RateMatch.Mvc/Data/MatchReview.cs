@@ -17,6 +17,9 @@ namespace RateMatch.Mvc.Data
 
         [Column(TypeName ="varchar(256)")]
         public string? AuthorName { get; set; } = "Guest";
+
+        public Guid EditKey { get; set; } = Guid.NewGuid();
+
         public int UserId { get; set; }
         public ApplicationUser? User { get; set; }
 
