@@ -8,36 +8,40 @@ class MatchReviewsApp extends React.Component {
         this.state = {
             items: [
                 {
+                    authorName: "user1",
                     reviewContent: "What a great match!",
-                    reviewRating:5
+                    reviewRating: 5
                 },
                 {
+                    authorName: "user1",
                     reviewContent: "What a great match 1!",
-                    reviewRating:5
+                    reviewRating: 5
                 },
                 {
+                    authorName: "user1",
                     reviewContent: "What a great match 2 !",
-                    reviewRating:5
+                    reviewRating: 5
                 },
-               
+
             ]
         };
     }
     render() {
-        return (<div>
-            <ReviewRating reviewRating="5"></ReviewRate>
-            <PostMatchReview itemSubmitted={this.addNewItem.bind(this)}></PostMatchReview>
-            
-            <MatchReveiwsListView items={this.state.items}>
-            </MatchReveiwsListView></div>
+        return (
+            <div>
+                <PostMatchReview itemSubmitted={this.addNewItem.bind(this)}></PostMatchReview>
+                <MatchReveiwsListView items={this.state.items}>
+                </MatchReveiwsListView>
+            </div>
         )
     }
+  
     addNewItem(value) {
+        console.log(value);
         this.setState(prevState => ({
             items: [value, ...prevState.items]
         }));
         //
-        
     }
 }
 
@@ -63,21 +67,48 @@ class MatchReviewsListViewItem extends React.Component {
         super(props);
     }
     render() {
-        return (<div>{this.props.item.reviewContent} ({this.props.item.reviewRating})</div>)
+        return (<div><strong>{this.props.item.authorName}: </strong>
+            {this.props.item.reviewContent} ({this.props.item.reviewRating})</div>)
     }
 }
 
 class ReviewRating extends React.Component {
     constructor(props) {
         super(props);
+        this.state = { selectedRating: this.props.reviewRating };
+    }
+    handleMouseOver(rating) {
+        rating = rating + 1;
+        this.setState({ selectedRating: rating })
+        this.props.ratingChanged(rating);
+        console.log(rating);
     }
     render() {
         let output = [];
-        for (let i = 0; i < 5; i++) {
-            output.push(<React.Fragment key={i}>
-                <div className="d-inline review-star"><i className={'fa-solid fa-star'}></i></div>
-            </React.Fragment>);
-        }
+        let starClasses = [
+            ['fa-solid', 'fa-star'],
+            ['fa-solid', 'fa-star'],
+            ['fa-solid', 'fa-star'],
+            ['fa-solid', 'fa-star'],
+            ['fa-solid', 'fa-star']
+        ];
+
+        
+
+        starClasses.forEach((item, index) => {
+            let cssClasses = ["d-inline", "review-star"];
+            if (index <= (this.state.selectedRating-1)) {
+                cssClasses.push( "is-selected");
+            }
+           
+            output.push(
+                <div key={index} className={cssClasses.join(" ")} onMouseOver={() => { this.handleMouseOver(index) }}>
+                    <i className={starClasses[index].join(" ")}></i>
+                </div>
+
+            );  
+        })
+           
         return (<div className="reviews-rate-widget">
             {output }
         </div>
@@ -88,25 +119,52 @@ class ReviewRating extends React.Component {
 class PostMatchReview extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { reviewContent: "",reviewRating: 5};
+        this.state = { authorName:"Guest", reviewContent: "",reviewRating: 5};
+    }
+    handleReviewRatingChange(value) {
+        this.setState({ reviewRating: (value) });
     }
     handleReviewContentChange(event) { this.setState({ reviewContent: event.target.value }); }
+    handleAuthorNameChange(event) { this.setState({ authorName: event.target.value }); }
     render() {
-        return (<div className="form-group">
-            <input
-                type="text"
-                value={this.state.reviewContent}
-                onChange={this.handleReviewContentChange.bind(this)}
-                style={{ padding: "3px" }} />
-            <button className="btn btn-primary rounded-0" onClick={this.addNewItem.bind(this)}>Submit</button>
-        </div>)
+        return (
+            <div>
+                <ReviewRating ratingChanged={this.handleReviewRatingChange.bind(this)} reviewRating={this.state.reviewRating}></ReviewRating>
+                <div className="form-group">
+                    <input
+                        placeholder="Your Name..."
+                        type="text"
+                        value={this.state.authorName}
+                        onChange={this.handleAuthorNameChange.bind(this)}
+
+                    />
+                    <input
+                        placeholder="Enter review..."
+                        type="text"
+                        value={this.state.reviewContent}
+                        onChange={this.handleReviewContentChange.bind(this)}
+                    />
+                    <button className="btn btn-primary rounded-0" onClick={this.addNewItem.bind(this)}>Submit</button>
+                </div>
+            </div>
+        );
     }
     addNewItem() {
-        this.props.itemSubmitted({
-            reviewContent: this.state.reviewContent,
-            reviewRating: this.state.reviewRating
-        });
-        this.setState({reviewRating:5, reviewContent: "" });
+        console.log(this.state);
+        if (this.state.authorName.length > 3 && this.state.reviewContent.length > 3) {
+            
+            this.props.itemSubmitted({
+                authorName: this.state.authorName,
+                reviewContent: this.state.reviewContent,
+                reviewRating: this.state.reviewRating
+            });
+            this.setState({ authorName: "Guest", reviewRating: 5, reviewContent: "" });
+
+        }
+        else {
+            alert("Name and Review must  be greater than 3 letters.");
+        }
+
     }
 }
 

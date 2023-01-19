@@ -46,6 +46,7 @@ footer {
 .reviews-rate-widget .review-star {
   color: #ccc;
 }
-.reviews-rate-widget .review-star:hover {
+.reviews-rate-widget .review-star:hover, .reviews-rate-widget .review-star.is-selected {
   color: orange;
+  cursor: pointer;
 }
