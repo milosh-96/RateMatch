@@ -25,7 +25,7 @@ class MatchReviewsApp extends React.Component {
     }
     render() {
         return (<div>
-            <ReviewRate reviewRating="5"></ReviewRate>
+            <ReviewRating reviewRating="5"></ReviewRate>
             <PostMatchReview itemSubmitted={this.addNewItem.bind(this)}></PostMatchReview>
             
             <MatchReveiwsListView items={this.state.items}>
@@ -67,7 +67,7 @@ class MatchReviewsListViewItem extends React.Component {
     }
 }
 
-class ReviewRate extends React.Component {
+class ReviewRating extends React.Component {
     constructor(props) {
         super(props);
     }
