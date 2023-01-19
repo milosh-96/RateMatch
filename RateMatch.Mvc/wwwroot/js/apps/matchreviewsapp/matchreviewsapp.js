@@ -78,7 +78,7 @@ class ReviewRate extends React.Component {
                 <div className="d-inline review-star"><i className={'fa-solid fa-star'}></i></div>
             </React.Fragment>);
         }
-        return (<div class="reviews-rate-widget">
+        return (<div className="reviews-rate-widget">
             {output }
         </div>
         )
@@ -102,8 +102,11 @@ class PostMatchReview extends React.Component {
         </div>)
     }
     addNewItem() {
-        this.props.itemSubmitted(this.state.reviewContent);
-        this.setState({ reviewContent: "" });
+        this.props.itemSubmitted({
+            reviewContent: this.state.reviewContent,
+            reviewRating: this.state.reviewRating
+        });
+        this.setState({reviewRating:5, reviewContent: "" });
     }
 }
 
