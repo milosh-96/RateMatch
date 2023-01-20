@@ -1,5 +1,5 @@
 ﻿using Microsoft.Build.Framework;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 using RateMatch.Mvc.Data.IdentityEntities;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -20,7 +20,7 @@ namespace RateMatch.Mvc.Data
 
         public Guid EditKey { get; set; } = Guid.NewGuid();
 
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
         public ApplicationUser? User { get; set; }
 
         public int MatchId { get; set; }

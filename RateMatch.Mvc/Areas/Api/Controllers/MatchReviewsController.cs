@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RateMatch.Mvc.Data;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -10,35 +11,60 @@ namespace RateMatch.Mvc.Areas.Api.Controllers
     [ApiController]
     public class MatchReviewsController : ControllerBase
     {
+        private readonly ApplicationDbContext _context;
+
+        public MatchReviewsController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
         // GET: api/<MatchReviewsController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<MatchReview> Get()
         {
-            return new string[] { "value1", "value2" };
+            return _context.MatchReviews.ToList();
+
+        } 
+        // GET: api/<MatchReviewsController>
+        [HttpGet("bymatch/{matchId:int}")]
+        public IEnumerable<MatchReview> GetByMatch(int matchId)
+        {
+            return _context.SportsMatches
+                .Where(x => x.Id == matchId)
+                .Include(x => x.Reviews)
+                .FirstOrDefault().Reviews;
         }
 
         // GET api/<MatchReviewsController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{id:int}")]
+        public MatchReview Get(int id)
         {
-            return "value";
+            return _context.MatchReviews.Where(x => x.Id == id).FirstOrDefault();
         }
 
         // POST api/<MatchReviewsController>
         [HttpPost]
-        public IActionResult Post([FromBody] MatchReviewDto values)
+        public IActionResult Post(int id, [FromBody] MatchReviewDto values)
         {
-            return new JsonResult(values);
+            MatchReview review = new MatchReview();
+            review.AuthorName = values.AuthorName;
+            review.ReviewContent = values.ReviewContent;
+            review.ReviewRating = values.ReviewRating;
+            review.EditKey = Guid.NewGuid();
+            review.MatchId = id;
+            _context.MatchReviews.Add(review);
+            _context.SaveChanges();
+            return new JsonResult(review);
         }
 
         // PUT api/<MatchReviewsController>/5
-        [HttpPut("{id}")]
+        [HttpPut("{id:int}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
         // DELETE api/<MatchReviewsController>/5
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         public void Delete(int id)
         {
         }

@@ -25,7 +25,11 @@
                 <img src="/demo.jpg" style="width:100%" alt="Demo Image" />
             </div>
         </div>
+        </div>
 
 @section Scripts {
+    <script>
+        var matchId = @Html.Raw(Model.Item.Id);
+    </script>
     <script type="text/babel" src="~/js/apps/matchreviewsapp/matchreviewsapp.js"></script>
 }

@@ -6,25 +6,13 @@ class MatchReviewsApp extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            items: [
-                {
-                    authorName: "user1",
-                    reviewContent: "What a great match!",
-                    reviewRating: 5
-                },
-                {
-                    authorName: "user1",
-                    reviewContent: "What a great match 1!",
-                    reviewRating: 5
-                },
-                {
-                    authorName: "user1",
-                    reviewContent: "What a great match 2 !",
-                    reviewRating: 5
-                },
-
-            ]
+            items: []
         };
+    }
+    componentDidMount() {
+        fetch('/api/matchreviews/bymatch/'+matchId)
+            .then(response => response.json())
+            .then(response => this.setState({ items: response }));
     }
     render() {
         return (
@@ -38,6 +26,17 @@ class MatchReviewsApp extends React.Component {
   
     addNewItem(value) {
         console.log(value);
+        console.log(matchId);
+        fetch('/api/matchreviews?id=' + matchId, {
+            method: 'post',
+            body: JSON.stringify(value),
+            headers: {
+                'Accept': 'application/json, text/plain',
+                'Content-Type': 'application/json;charset=UTF-8'
+            },
+        })
+            .then((response) => response.json())
+            .then((response) => console.log(response));
         this.setState(prevState => ({
             items: [value, ...prevState.items]
         }));
@@ -77,12 +76,20 @@ class ReviewRating extends React.Component {
         super(props);
         this.state = { selectedRating: this.props.reviewRating };
     }
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.selectedRating !== this.props.reviewRating) {
+            this.setState({ selectedRating: this.props.reviewRating });
+        }
+    }
+
+
     handleMouseOver(rating) {
         rating = rating + 1;
         this.setState({ selectedRating: rating })
         this.props.ratingChanged(rating);
         console.log(rating);
     }
+   
     render() {
         let output = [];
         let starClasses = [
@@ -108,7 +115,7 @@ class ReviewRating extends React.Component {
 
             );  
         })
-           
+       
         return (<div className="reviews-rate-widget">
             {output }
         </div>
