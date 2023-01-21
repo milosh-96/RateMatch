@@ -6,15 +6,18 @@ class MatchReviewsApp extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            items: []
+            items: [],
+            edit: { editMode: false,editItem:null}
         };
     }
     componentDidMount() {
         fetch('/api/matchreviews/bymatch/'+matchId)
             .then(response => response.json())
             .then(response => this.setState({ items: response }));
+
     }
     render() {
+       
         return (
             <div>
                 <PostMatchReview itemSubmitted={this.addNewItem.bind(this)}></PostMatchReview>
@@ -67,7 +70,12 @@ class MatchReviewsListViewItem extends React.Component {
     }
     render() {
         return (<div><strong>{this.props.item.authorName}: </strong>
-            {this.props.item.reviewContent} ({this.props.item.reviewRating})</div>)
+            {this.props.item.reviewContent} ({this.props.item.reviewRating})
+            <div>
+                <small><a href={"/matchreviews/report/" + this.props.item.id}>Report</a></small>
+            </div>
+            <hr></hr>
+        </div>)
     }
 }
 
