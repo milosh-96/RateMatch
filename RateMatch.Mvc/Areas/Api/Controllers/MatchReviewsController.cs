@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RateMatch.Mvc.Data;
 
@@ -44,6 +45,7 @@ namespace RateMatch.Mvc.Areas.Api.Controllers
 
         // POST api/<MatchReviewsController>
         [HttpPost]
+        [Authorize]
         public IActionResult Post(int id, [FromBody] MatchReviewDto values)
         {
             MatchReview review = new MatchReview();

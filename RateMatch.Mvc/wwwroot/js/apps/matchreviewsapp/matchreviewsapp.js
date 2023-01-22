@@ -7,7 +7,8 @@ class MatchReviewsApp extends React.Component {
         super(props);
         this.state = {
             items: [],
-            edit: { editMode: false,editItem:null}
+            edit: { editMode: false, editItem: null },
+            loggedIn:false
         };
     }
     componentDidMount() {
@@ -15,12 +16,19 @@ class MatchReviewsApp extends React.Component {
             .then(response => response.json())
             .then(response => this.setState({ items: response }));
 
+        fetch('/api/login/is-logged-in')
+            .then(response => response.json())
+            .then(response => { console.log(response); this.setState({ loggedIn: response }); });
+
     }
     render() {
-       
+        var postMatchReview = <div>Please login to post a review</div>;
+        if (this.state.loggedIn) {
+            var postMatchReview = <PostMatchReview itemSubmitted={this.addNewItem.bind(this)}></PostMatchReview>
+        }
         return (
             <div>
-                <PostMatchReview itemSubmitted={this.addNewItem.bind(this)}></PostMatchReview>
+                {postMatchReview}
                 <MatchReveiwsListView items={this.state.items}>
                 </MatchReveiwsListView>
             </div>
