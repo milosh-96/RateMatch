@@ -39,6 +39,7 @@ namespace RateMatch.Mvc.Data
         public int ReviewRating { get; set; } = 5;
 
         [Required]
+        public int? UserId { get; set; }
         public string AuthorName { get; set; } = "Guest";
       
     }

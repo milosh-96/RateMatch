@@ -77,7 +77,7 @@ class MatchReviewsListViewItem extends React.Component {
         super(props);
     }
     render() {
-        return (<div><strong>{this.props.item.authorName}: </strong>
+        return (<div><strong>{this.props.item.user.userName}: </strong>
             {this.props.item.reviewContent} ({this.props.item.reviewRating})
             <div>
                 <small><a href={"/matchreviews/report/" + this.props.item.id}>Report</a></small>
@@ -142,25 +142,26 @@ class ReviewRating extends React.Component {
 class PostMatchReview extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { authorName:"Guest", reviewContent: "",reviewRating: 5};
+        this.state = { user: {id:null,userName:"",email:"",phoneNumber:""}, reviewContent: "",reviewRating: 5};
     }
+
+    async componentDidMount() {
+        await fetch('/api/user/getcurrent').then((response) => response.json()).then((data) => this.setState({ user: data }));
+      }
     handleReviewRatingChange(value) {
         this.setState({ reviewRating: (value) });
     }
     handleReviewContentChange(event) { this.setState({ reviewContent: event.target.value }); }
-    handleAuthorNameChange(event) { this.setState({ authorName: event.target.value }); }
+    //handleAuthorNameChange(event) { this.setState({ authorName: event.target.value }); }
     render() {
-        return (
-            <div>
+        let output = "";
+        if (this.state.user) {
+            output = <div>
                 <ReviewRating ratingChanged={this.handleReviewRatingChange.bind(this)} reviewRating={this.state.reviewRating}></ReviewRating>
                 <div className="form-group">
-                    <input
-                        placeholder="Your Name..."
-                        type="text"
-                        value={this.state.authorName}
-                        onChange={this.handleAuthorNameChange.bind(this)}
-
-                    />
+                    <label title={this.state.user.userName}>
+                        <strong>You:&nbsp;</strong>
+                    </label>
                     <input
                         placeholder="Enter review..."
                         type="text"
@@ -170,24 +171,29 @@ class PostMatchReview extends React.Component {
                     <button className="btn btn-primary rounded-0" onClick={this.addNewItem.bind(this)}>Submit</button>
                 </div>
             </div>
+        }
+        return (
+            output
         );
     }
     addNewItem() {
-        console.log(this.state);
-        if (this.state.authorName.length > 3 && this.state.reviewContent.length > 3) {
-            
-            this.props.itemSubmitted({
-                authorName: this.state.authorName,
-                reviewContent: this.state.reviewContent,
-                reviewRating: this.state.reviewRating
-            });
-            this.setState({ authorName: "Guest", reviewRating: 5, reviewContent: "" });
+        if (this.state.user != null) {
+            if (this.state.reviewContent.length > 3) {
 
-        }
-        else {
-            alert("Name and Review must  be greater than 3 letters.");
-        }
+                this.props.itemSubmitted({
+                    user: this.state.user,
+                    userId: this.state.user.id,
+                    authorName: this.state.userName,
+                    reviewContent: this.state.reviewContent,
+                    reviewRating: this.state.reviewRating
+                });
+                this.setState({ user: this.state.user, reviewRating: 5, reviewContent: "" });
 
+            }
+            else {
+                alert("Name and Review must  be greater than 3 letters.");
+            }
+        }
     }
 }
 

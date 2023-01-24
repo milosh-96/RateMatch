@@ -32,7 +32,7 @@ namespace RateMatch.Mvc.Areas.Api.Controllers
         {
             return _context.SportsMatches
                 .Where(x => x.Id == matchId)
-                .Include(x => x.Reviews)
+                .Include(x => x.Reviews).ThenInclude(x=>x.User)
                 .FirstOrDefault().Reviews;
         }
 
@@ -40,7 +40,7 @@ namespace RateMatch.Mvc.Areas.Api.Controllers
         [HttpGet("{id:int}")]
         public MatchReview Get(int id)
         {
-            return _context.MatchReviews.Where(x => x.Id == id).FirstOrDefault();
+            return _context.MatchReviews.Where(x => x.Id == id).Include(x=>x.User).FirstOrDefault();
         }
 
         // POST api/<MatchReviewsController>
@@ -49,6 +49,7 @@ namespace RateMatch.Mvc.Areas.Api.Controllers
         public IActionResult Post(int id, [FromBody] MatchReviewDto values)
         {
             MatchReview review = new MatchReview();
+            review.UserId = values.UserId;
             review.AuthorName = values.AuthorName;
             review.ReviewContent = values.ReviewContent;
             review.ReviewRating = values.ReviewRating;
