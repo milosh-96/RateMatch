@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="NewFolder\**" />
+    <Content Remove="NewFolder\**" />
+    <EmbeddedResource Remove="NewFolder\**" />
+    <None Remove="NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="compilerconfig.json" />
   </ItemGroup>
 
@@ -32,7 +39,6 @@
     <Folder Include="Areas\Api\Models\" />
     <Folder Include="Areas\Api\Views\" />
     <Folder Include="Data\Migrations\" />
-    <Folder Include="NewFolder\" />
   </ItemGroup>
 
   <ItemGroup>
