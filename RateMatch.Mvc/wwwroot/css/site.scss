@@ -37,6 +37,7 @@ body {
 .navbar {
   background:linear-gradient($ruby-red 2%,#fff 20%);
 }
+#match-cards-view {
 .card {
     background: linear-gradient($beau-blue 2%,#fff 10%);
     border: 0;
@@ -49,6 +50,8 @@ body {
 .card-title {
     
 }
+}
+
 
 
 footer {

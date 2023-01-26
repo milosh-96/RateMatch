@@ -35,6 +35,7 @@ namespace RateMatch.Mvc.Controllers
 
             var sportsMatch = await _context.SportsMatches
                 .Include(x=>x.Reviews)
+                .ThenInclude(x=>x.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (sportsMatch == null)
             {

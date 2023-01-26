@@ -25,15 +25,14 @@ html {
   background: linear-gradient(#a31621 2%, #fff 20%);
 }
 
-.card {
+#match-cards-view .card {
   background: linear-gradient(#bfdbf7 2%, #fff 10%);
   border: 0;
 }
-.card:hover {
+#match-cards-view .card:hover {
   background: linear-gradient(#db222a 2%, #fff 10%);
   cursor: pointer;
 }
-
 footer {
   background: #333;
   background: linear-gradient(#eee 5%, #fff 1%, #000, #333 20%);
