@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RateMatch.Mvc.Data;
+using RateMatch.Mvc.Data.IdentityEntities;
 using RateMatch.Mvc.Models.SportsMatches;
 
 namespace RateMatch.Mvc.Controllers
@@ -13,10 +15,14 @@ namespace RateMatch.Mvc.Controllers
     public class SportsMatchesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public SportsMatchesController(ApplicationDbContext context)
+
+
+        public SportsMatchesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: SportsMatches
@@ -44,7 +50,14 @@ namespace RateMatch.Mvc.Controllers
             SportsMatchDetailsViewModel viewModel = new SportsMatchDetailsViewModel()
             {
                 Item = sportsMatch
+            
             };
+            if(HttpContext.User.Identity != null && HttpContext.User.Identity.IsAuthenticated)
+            {
+                viewModel.IsLoggedIn = true;
+                viewModel.ReviewForm.UserId = (await _userManager.GetUserAsync(HttpContext.User)).Id;
+
+            }
             ViewData["Title"] = sportsMatch.MatchName + " ("+sportsMatch.Sport + ")";
             return View(viewModel);
         }

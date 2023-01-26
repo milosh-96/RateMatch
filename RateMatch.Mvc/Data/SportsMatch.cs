@@ -33,6 +33,8 @@ namespace RateMatch.Mvc.Data
 
         [NotMapped]
         public string Url { get; set; } = "";
+
+
     }
 
 

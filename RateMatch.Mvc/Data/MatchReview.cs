@@ -1,7 +1,7 @@
-﻿using Microsoft.Build.Framework;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 using RateMatch.Mvc.Data.IdentityEntities;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace RateMatch.Mvc.Data
 {
@@ -33,7 +33,9 @@ namespace RateMatch.Mvc.Data
     public class MatchReviewDto
     {
         [Required]
-        public string ReviewContent { get; set; } = "";
+        [MinLength(5)]
+        [MaxLength(1024)]
+        public string? ReviewContent { get; set; }
 
         [Required]
         public int ReviewRating { get; set; } = 5;

@@ -41,17 +41,17 @@ body {
 .card {
     background: linear-gradient($beau-blue 2%,#fff 10%);
     border: 0;
+
     &:hover {
         background: linear-gradient($cadmium-red 2%,#fff 10%);
-        cursor:pointer;
+        cursor: pointer;
     }
+}
 }
 
 .card-title {
     
 }
-}
-
 
 
 footer {

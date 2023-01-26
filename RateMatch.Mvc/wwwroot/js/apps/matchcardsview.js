@@ -75,7 +75,7 @@ class MatchItemCard extends React.Component {
     }
 }
 
-const container = document.querySelector('#match-cards-view');
+const container = document.getElementById('match-cards-view');
 const root = ReactDOM.createRoot(container);
 root.render(e(MatchItemsView));
 

@@ -11,10 +11,11 @@
 
     <div class="row">
         <div class="col-md-6">
-            <div>
-                <em>If you see this message you need to enable Javascript or
-                    something went wrong.
-                </em>
+            <button class="btn btn-sm btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#user-reviews" aria-expanded="false" aria-controls="user-reviews">
+                Toggle Other Reviews
+            
+            </button>
+            <div class="collapse show" id="user-reviews">
                 <ul class="list-group">
                     @foreach (var item in Model.Item.Reviews)
                     {
@@ -37,35 +38,50 @@
                                 </div>
                         </li>
                     }
-                </ul>>
+                </ul>
                                 
               
               
             </div>
         </div>
         <div class="col-md-6">
-            <div>
+            <div class="rating card">
 
-                <div class=”rating”>
-
-                    <input type="radio" name=”rating” value=”5″ id=”5″><label for=”5″>☆</label>
-                    <input type="radio" name=”rating” value=”4″ id=”4″><label for=”4″>☆</label>
-                    <input type="radio" name=”rating” value=”3″ id=”3″><label for=”3″>☆</label>
-                    <input type="radio" name=”rating” value=”2″ id=”2″><label for=”2″>☆</label>
-                    <input type="radio" name=”rating” value=”1″ id=”1″><label for=”1″>☆</label>
-                </div>
-
-                <div class="form-group">
-                    <textarea class="form-control visually-hidden" rows="10"></textarea>
-                </div>
+                @if(Model.IsLoggedIn)
+                {
+                    <form method="post"
+                      asp-route-matchId="@Model.Item.Id"
+                      asp-action="Create" asp-controller="MatchReviews">
+                        <div class="form-group card-body">
+                            <h3>Your Review</h3>
+                            <select class="form-control" asp-for="ReviewForm.ReviewRating">
+                                <option value="1">1 - Bad Match!</option>
+                                <option value="1">2 - Nothing Special</option>
+                                <option value="1">3 - Solid</option>
+                                <option value="1">4 - Very good match</option>
+                                <option value="1">5 - True classic!</option>
+                            </select>
+                        </div>
+                        <div class="form-group card-body pt-0">
+                            <textarea asp-for="ReviewForm.ReviewContent" class="form-control" placeholder="Analyze match in your words: tactics, subs, game decisions..."></textarea>
+                        </div>
+                        <div class="card-body pt-0">
+                            <button class="btn btn-primary">Post</button>
+                            </div>
+                    </form>
+                }
+                else
+                {
+                <partial name="_LoginPartial"></partial>
+                }
 @*                <img src="/demo.jpg" style="width:100%" alt="Demo Image" />
 *@            </div>
         </div>
         </div>
-
+        </div>
 @section Scripts {
     <script>
         var matchId = @Html.Raw(Model.Item.Id);
     </script>
-    <script type="text/babel" src="~/js/apps/matchreviewsapp/matchreviewsapp.js"></script>
+@*    <script type="text/babel" src="~/js/apps/matchreviewsapp/matchreviewsapp.js"></script>*@
 }
