@@ -62,9 +62,25 @@ namespace RateMatch.Mvc.Controllers
         }
 
         // GET: MatchReviewsController/Edit/5
-        public ActionResult Edit(int id)
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Edit(int id)
         {
-            return View();
+            MatchReview? review = await _context.MatchReviews.Where(x => x.Id == id).FirstOrDefaultAsync();
+            if(review != null)
+            {
+                ApplicationUser? currentUser = await _userManager.GetUserAsync(User);
+                if (currentUser != null)
+                {
+                    if (review.UserId == currentUser.Id)
+                    {
+                        return View();
+                    }
+                }
+                //not authorized
+                return new BadRequestResult();
+            }
+            return new NotFoundResult();
         }
 
         // POST: MatchReviewsController/Edit/5

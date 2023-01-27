@@ -10,7 +10,7 @@
         @if (Model.IsCurrentUserItem)
         {
             <div>
-                <a href="#">Edit</a>
+                <a asp-route-id="@Model.Item.Id" asp-action="Edit" asp-controller="MatchReviews">Edit</a>
                 <a href="#">Delete</a>
             </div>
         }
