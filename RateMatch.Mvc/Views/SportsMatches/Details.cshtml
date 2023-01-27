@@ -2,6 +2,7 @@
 @model SportsMatchDetailsViewModel
 
 @{
+    ApplicationUserDto currentUserGlobal = (await userManager.GetUserAsync(User)).ToDto();
 }
 <div>
     <div style="width:100%;background:#fff;border-bottom:3px solid #ccc;">
@@ -19,6 +20,11 @@
                 <ul class="list-group">
                     @foreach (var item in Model.Item.Reviews)
                     {
+                        bool userItem = false;
+                        if(currentUserGlobal != null && currentUserGlobal.Id == item.UserId)
+                        {
+                            userItem = true;
+                        }
                         <li class="list-group-item">
                            
                                 <div class="row">
@@ -28,6 +34,14 @@
                                         @item.User.UserName <cite title="@Model.Item.MatchName">@Model.Item.MatchName</cite>
 
                                     </figcaption>
+                                    @if(userItem)
+                                    {
+                                         <div>
+                                            <a href="#">Edit</a>
+                                            <a href="#">Delete</a>
+                                         </div>
+                                    }
+                                   
                                     </div>
                                 <div class="col-md-3">
                                     @for (int i = 1; i <= item.ReviewRating; i++)
