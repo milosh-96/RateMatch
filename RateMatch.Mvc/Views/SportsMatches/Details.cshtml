@@ -1,4 +1,5 @@
 ﻿@using RateMatch.Mvc.Models.SportsMatches;
+@using RateMatch.Mvc.Views.MatchReviews.Partials;
 @model SportsMatchDetailsViewModel
 
 @{
@@ -11,63 +12,88 @@
     </div>
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <button class="btn btn-sm btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#user-reviews" aria-expanded="false" aria-controls="user-reviews">
                 Toggle Other Reviews
-            
+
             </button>
+        </div>
+        <div class="col-md-6">
+            
             <div class="collapse show" id="user-reviews">
                 <ul class="list-group">
-                    @foreach (var item in Model.Item.Reviews)
+                    @{
+                        var globalReviewsList = Model.Item.Reviews;
+                        if (currentUserGlobal != null)
+                        {
+                            globalReviewsList = Model.Item.Reviews.Where(x => x.UserId != currentUserGlobal.Id).ToList();
+
+                        }
+                    }
+                    @foreach (var item in globalReviewsList)
                     {
                         bool userItem = false;
-                        if(currentUserGlobal != null && currentUserGlobal.Id == item.UserId)
+                        if (currentUserGlobal != null && currentUserGlobal.Id == item.UserId)
                         {
                             userItem = true;
                         }
                         <li class="list-group-item">
-                           
-                                <div class="row">
-                                    <div class="col-md-9">
-                                    <blockquote class="blockquote">@item.ReviewContent</blockquote>
-                                    <figcaption class="blockquote-footer">
-                                        @item.User.UserName <cite title="@Model.Item.MatchName">@Model.Item.MatchName</cite>
+                            @{
+                                MatchReviewItemPartialViewModel partialModel = new MatchReviewItemPartialViewModel()
+                {
+                    Item = item,
+                    IsCurrentUserItem = userItem
+                };
 
-                                    </figcaption>
-                                    @if(userItem)
-                                    {
-                                         <div>
-                                            <a href="#">Edit</a>
-                                            <a href="#">Delete</a>
-                                         </div>
-                                    }
-                                   
-                                    </div>
-                                <div class="col-md-3">
-                                    @for (int i = 1; i <= item.ReviewRating; i++)
-                                    {
-                                        <i class="fa-solid fa-star"></i>
-                                    }
-                                </div>
-                                </div>
+                        }
+                            <partial name="../MatchReviews/Partials/_MatchReviewItemPartial.cshtml"
+                                 model="partialModel"></partial>
                         </li>
                     }
                 </ul>
-                                
-              
-              
+
+
+
             </div>
         </div>
         <div class="col-md-6">
             <div class="rating card">
 
-                @if(Model.IsLoggedIn)
+                @if (Model.IsLoggedIn)
                 {
+                   <h3>My Reviews</h3>
+                    <ul class="list-group">
+
+                       
+
+                        @foreach (var item in Model.Item.Reviews.Where(x=>x.UserId==currentUserGlobal.Id).ToList())
+                        {
+                            bool userItem = false;
+                            if (currentUserGlobal != null && currentUserGlobal.Id == item.UserId)
+                            {
+                                userItem = true;
+                            }
+                            <li class="list-group-item">
+                                @{
+                                    MatchReviewItemPartialViewModel partialModel = new MatchReviewItemPartialViewModel()
+                    {
+                        Item = item,
+                        IsCurrentUserItem = userItem
+                    };
+
+                                }
+                                <partial name="../MatchReviews/Partials/_MatchReviewItemPartial.cshtml"
+                                 model="partialModel"></partial>
+                            </li>
+                        }
+                    </ul>
+                    <hr />
+
                     <form method="post"
                       asp-route-matchId="@Model.Item.Id"
                       asp-action="Create" asp-controller="MatchReviews">
                         <div class="form-group card-body">
-                            <h3>Your Review</h3>
+                            <h3>Write a Review</h3>
                             <select class="form-control" asp-for="ReviewForm.ReviewRating">
                                 <option value="1">1 - Bad Match!</option>
                                 <option value="1">2 - Nothing Special</option>
@@ -81,21 +107,22 @@
                         </div>
                         <div class="card-body pt-0">
                             <button class="btn btn-primary">Post</button>
-                            </div>
+                        </div>
                     </form>
                 }
                 else
                 {
-                <partial name="_LoginPartial"></partial>
+                    <partial name="_PleaseLoginRegisterMessagePartial"></partial>
                 }
-@*                <img src="/demo.jpg" style="width:100%" alt="Demo Image" />
-*@            </div>
+                @*                <img src="/demo.jpg" style="width:100%" alt="Demo Image" />
+                *@
+            </div>
         </div>
-        </div>
-        </div>
+    </div>
+</div>
 @section Scripts {
     <script>
         var matchId = @Html.Raw(Model.Item.Id);
     </script>
-@*    <script type="text/babel" src="~/js/apps/matchreviewsapp/matchreviewsapp.js"></script>*@
+    @*    <script type="text/babel" src="~/js/apps/matchreviewsapp/matchreviewsapp.js"></script>*@
 }

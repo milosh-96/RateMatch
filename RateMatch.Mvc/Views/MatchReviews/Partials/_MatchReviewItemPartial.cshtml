@@ -1,0 +1,25 @@
+﻿@using RateMatch.Mvc.Views.MatchReviews.Partials;
+@model MatchReviewItemPartialViewModel
+<div class="row">
+    <div class="col-md-9">
+        <blockquote class="blockquote">@Model.Item.ReviewContent</blockquote>
+        <figcaption class="blockquote-footer">
+            @Model.Item.User.UserName <cite title="@Model.Item.Match.MatchName">@Model.Item.Match.MatchName</cite>
+
+        </figcaption>
+        @if (Model.IsCurrentUserItem)
+        {
+            <div>
+                <a href="#">Edit</a>
+                <a href="#">Delete</a>
+            </div>
+        }
+
+    </div>
+    <div class="col-md-3">
+        @for (int i = 1; i <= Model.Item.ReviewRating; i++)
+        {
+            <i class="fa-solid fa-star"></i>
+        }
+    </div>
+</div>

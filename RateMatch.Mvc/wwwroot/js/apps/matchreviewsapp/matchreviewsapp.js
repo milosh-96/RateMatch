@@ -197,6 +197,6 @@ class PostMatchReview extends React.Component {
     }
 }
 
-const container = document.querySelector('#match-reviews-app');
-const root = ReactDOM.createRoot(container);
-root.render(e(MatchReviewsApp));
+//const container = document.querySelector('#match-reviews-app');
+//const root = ReactDOM.createRoot(container);
+//root.render(e(MatchReviewsApp));

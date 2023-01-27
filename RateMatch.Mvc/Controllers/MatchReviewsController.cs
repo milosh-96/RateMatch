@@ -40,6 +40,7 @@ namespace RateMatch.Mvc.Controllers
 
         // POST: MatchReviewsController/Create
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [Authorize]
         public IActionResult Create(int matchId,SportsMatchDetailsViewModel form)
         {
