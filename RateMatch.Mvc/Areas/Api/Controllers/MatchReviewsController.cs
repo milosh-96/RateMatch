@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RateMatch.Mvc.Data;
+using RateMatch.Mvc.Data.IdentityEntities;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,6 +15,7 @@ namespace RateMatch.Mvc.Areas.Api.Controllers
     public class MatchReviewsController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public MatchReviewsController(ApplicationDbContext context)
         {
@@ -49,7 +52,7 @@ namespace RateMatch.Mvc.Areas.Api.Controllers
         public IActionResult Post(int id, [FromBody] MatchReviewDto values)
         {
             MatchReview review = new MatchReview();
-            review.UserId = values.UserId;
+            review.UserId = _userManager.GetUserAsync(User).Result.Id;
             review.AuthorName = values.AuthorName;
             review.ReviewContent = values.ReviewContent;
             review.ReviewRating = values.ReviewRating;

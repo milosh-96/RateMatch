@@ -35,6 +35,16 @@
     </header>
     <div class="container" id="page">
         <main role="main" class="pb-3">
+            @if(TempData["Error"] != null)
+            {
+                <div class="row">
+                    <div class="col-12">
+                        <div class="alert alert-warning">
+                            @TempData["Error"]
+                        </div>
+                    </div>
+                </div>
+            }
             @RenderBody()
         </main>
     </div>
@@ -44,6 +54,7 @@
             &copy; 2023 - @SiteInfo.FullName - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+    <partial name="_ValidationScriptsPartial" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/reactjs/umd/react.development.min.js" asp-append-version="true"></script>
@@ -54,3 +65,4 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
