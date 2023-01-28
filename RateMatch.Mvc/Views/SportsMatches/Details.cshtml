@@ -82,8 +82,7 @@
                     };
 
                                 }
-                                <partial name="../MatchReviews/Partials/_MatchReviewItemPartial.cshtml"
-                                 model="partialModel"></partial>
+                                <partial name="../MatchReviews/Partials/_MatchReviewItemPartial.cshtml" model="partialModel" />
                             </li>
                         }
                     </ul>
@@ -92,6 +91,7 @@
                     <form method="post"
                       asp-route-matchId="@Model.Item.Id"
                       asp-action="Create" asp-controller="MatchReviews">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group card-body">
                             <h3>Write a Review</h3>
                             <select class="form-control" asp-for="ReviewForm.ReviewRating">
@@ -104,6 +104,7 @@
                         </div>
                         <div class="form-group card-body pt-0">
                             <textarea asp-for="ReviewForm.ReviewContent" class="form-control" placeholder="Analyze match in your words: tactics, subs, game decisions..."></textarea>
+                            <span asp-validation-for="ReviewForm.ReviewContent" class="text-danger"></span>
                         </div>
                         <div class="card-body pt-0">
                             <button class="btn btn-primary">Post</button>

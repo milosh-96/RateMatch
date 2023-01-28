@@ -46,20 +46,28 @@ namespace RateMatch.Mvc.Controllers
         [Authorize]
         public IActionResult Create(int matchId, SportsMatchDetailsViewModel form)
         {
-            var values = form.ReviewForm;
-            MatchReview review = new MatchReview();
-            review.UserId = _userManager.GetUserAsync(User).Result.Id;
-            review.AuthorName = values.AuthorName;
-            review.ReviewContent = values.ReviewContent.Trim();
-            review.ReviewRating = values.ReviewRating;
-            review.EditKey = Guid.NewGuid();
-            review.MatchId = matchId;
-            _context.MatchReviews.Add(review);
-            _context.SaveChanges();
-            return RedirectToAction("Details", "SportsMatches", new
+            if(ModelState.IsValid)
             {
-                id = matchId
-            });
+                var values = form.ReviewForm;
+                MatchReview review = new MatchReview();
+                review.UserId = _userManager.GetUserAsync(User).Result.Id;
+                review.AuthorName = values.AuthorName;
+                if (values.ReviewContent != null)
+                {
+                    review.ReviewContent = values.ReviewContent.Trim();
+                }
+                review.ReviewRating = values.ReviewRating;
+                review.EditKey = Guid.NewGuid();
+                review.MatchId = matchId;
+                _context.MatchReviews.Add(review);
+                _context.SaveChanges();
+                return RedirectToAction("Details", "SportsMatches", new
+                {
+                    id = matchId
+                });
+            }
+            TempData["Error"] = "Review couldn't be added.";
+            return RedirectToAction("Details", "SportsMatches", new { id = matchId });
         }
 
         // GET: MatchReviewsController/Edit/5
@@ -95,6 +103,7 @@ namespace RateMatch.Mvc.Controllers
                     }
                 }
                 //not authorized
+                TempData["Error"] = "You don't have access to this resource.";
                 return new BadRequestResult();
             }
             return new NotFoundResult();
@@ -103,6 +112,7 @@ namespace RateMatch.Mvc.Controllers
         // POST: MatchReviewsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(int id, [Bind(Prefix = "Item")] MatchReviewDto form)
         {
             MatchReview? review = await _context.MatchReviews.Where(x => x.Id == id).FirstOrDefaultAsync();
@@ -139,24 +149,56 @@ namespace RateMatch.Mvc.Controllers
         }
 
         // GET: MatchReviewsController/Delete/5
-        public ActionResult Delete(int id)
+        [Authorize]
+        public async Task<IActionResult> Delete(int id)
         {
-            return View();
+            MatchReview? review = await _context.MatchReviews.Where(x => x.Id == id).FirstOrDefaultAsync();
+            if(review != null)
+            {
+                var currentUser = await _userManager.GetUserAsync(User);
+                if (review.UserId == currentUser.Id)
+                {
+                    ViewData["Title"] = "Delete Review";
+                    return View(review);
+                }
+                TempData["Error"] = "You don't have access to this resource.";
+                return new BadRequestResult();
+            }
+            return new NotFoundResult();
+          
         }
 
         // POST: MatchReviewsController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        [Authorize]
+        public async Task<IActionResult> Delete(int id, IFormCollection collection)
         {
-            try
+            MatchReview? review = await _context.MatchReviews.Where(x => x.Id == id).FirstOrDefaultAsync();
+            if (review != null)
             {
-                return RedirectToAction(nameof(Index));
+                //esnure the current authenticated user owns this resouce //
+                var currentUser = await _userManager.GetUserAsync(User);
+                if (review.UserId == currentUser.Id)
+                {
+                    try
+                    {
+                        _context.MatchReviews.Remove(review);
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction("Details", "SportsMatches", new { id = review.MatchId});
+
+                    }
+                    catch (Exception e)
+                    {
+                        TempData["Error"] = e.Message;
+                        return View(review);
+                    }
+                }           
+                TempData["Error"] = "You don't have access to this resource.";
+                return new BadRequestResult();
             }
-            catch
-            {
-                return View();
-            }
+            return new NotFoundResult();
+            
         }
     }
 }

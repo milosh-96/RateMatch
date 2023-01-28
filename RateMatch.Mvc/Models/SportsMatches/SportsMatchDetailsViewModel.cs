@@ -7,6 +7,6 @@ namespace RateMatch.Mvc.Models.SportsMatches
     {
         public bool IsLoggedIn { get; set; } = false;
         public SportsMatch Item { get; set; } = new SportsMatch();
-        public MatchReviewDto ReviewForm { get; set; } = new MatchReviewDto() { ReviewContent=" "};
+        public MatchReviewDto ReviewForm { get; set; } = new MatchReviewDto() { ReviewContent=String.Empty};
     }
 }
