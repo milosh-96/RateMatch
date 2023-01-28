@@ -55,7 +55,6 @@ namespace RateMatch.Mvc.Controllers
             if(HttpContext.User.Identity != null && HttpContext.User.Identity.IsAuthenticated)
             {
                 viewModel.IsLoggedIn = true;
-                viewModel.ReviewForm.UserId = (await _userManager.GetUserAsync(HttpContext.User)).Id;
 
             }
             ViewData["Title"] = sportsMatch.MatchName + " ("+sportsMatch.Sport + ")";

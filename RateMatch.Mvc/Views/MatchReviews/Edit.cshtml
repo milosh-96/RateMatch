@@ -1,23 +1,25 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@using RateMatch.Mvc.Models.MatchReviews;
+@model MatchReviewEditViewModel
 <div class="row">
     <div class="col-md-6 offset-md-3">
-        <div>
-            <div class="form-group">
-                 <select class="form-control">
-                                <option value="1">1 - Bad Match!</option>
-                                <option value="2">2 - Nothing Special</option>
-                                <option value="3">3 - Solid</option>
-                                <option value="4">4 - Very good match</option>
-                                <option value="5">5 - True classic!</option>
-                            </select>
-            </div>
-            <div class="form-group">
-                <textarea class="form-control"></textarea>
-            </div>
-        </div>
+        @if(Model.Item != null)
+        {
+            <form asp-route-id="@Model.Item.Id" asp-action="Edit" method="POST">
+                <div>
+                    <div class="form-group">
+                        <select class="form-control" asp-items="Model.RatingChoices" asp-for="Item.ReviewRating"></select>
+                    </div>
+                    <div class="form-group">
+                        @if (Model.Item != null)
+                        {
+                            <textarea class="form-control" asp-for="Item.ReviewContent"></textarea>
+                        }
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </form>
+        }
     </div>
 </div>

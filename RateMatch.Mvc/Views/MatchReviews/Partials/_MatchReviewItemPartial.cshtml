@@ -1,6 +1,6 @@
 ﻿@using RateMatch.Mvc.Views.MatchReviews.Partials;
 @model MatchReviewItemPartialViewModel
-<div class="row">
+<div class="row" id="review-@Model.Item.Id">
     <div class="col-md-9">
         <blockquote class="blockquote">@Model.Item.ReviewContent</blockquote>
         <figcaption class="blockquote-footer">
