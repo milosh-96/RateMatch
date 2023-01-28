@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - @SiteInfo.Name</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/placeholder-loading/dist/css/placeholder-loading.min.css
+" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/RateMatch.Mvc.styles.css" asp-append-version="true" />
 </head>
@@ -32,6 +35,16 @@
     </header>
     <div class="container" id="page">
         <main role="main" class="pb-3">
+            @if(TempData["Error"] != null)
+            {
+                <div class="row">
+                    <div class="col-12">
+                        <div class="alert alert-warning">
+                            @TempData["Error"]
+                        </div>
+                    </div>
+                </div>
+            }
             @RenderBody()
         </main>
     </div>
@@ -41,9 +54,15 @@
             &copy; 2023 - @SiteInfo.FullName - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+    <partial name="_ValidationScriptsPartial" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/reactjs/umd/react.development.min.js" asp-append-version="true"></script>
+    <script src="~/lib/reactjs/umd/react-dom.development.min.js" asp-append-version="true"></script>
+    <script src="~/lib/babel/babel.min.js" asp-append-version="true"></script>
+
+    <script type="text/babel" src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+

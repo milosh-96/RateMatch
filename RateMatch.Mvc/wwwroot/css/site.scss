@@ -29,6 +29,12 @@ html {
   position: relative;
   min-height: 100%;
 }
+.form-group {
+    label {
+        font-weight:bold;
+        text-transform:uppercase;
+    }
+}
 
 body {
     //margin-bottom: 60px;
@@ -37,13 +43,16 @@ body {
 .navbar {
   background:linear-gradient($ruby-red 2%,#fff 20%);
 }
+#match-cards-view {
 .card {
     background: linear-gradient($beau-blue 2%,#fff 10%);
     border: 0;
+
     &:hover {
         background: linear-gradient($cadmium-red 2%,#fff 10%);
-        cursor:pointer;
+        cursor: pointer;
     }
+}
 }
 
 .card-title {
@@ -62,4 +71,15 @@ footer {
 
 #page {
     //background:#eee;
+}
+
+.reviews-rate-widget {
+    .review-star {
+        color:#ccc;
+        &:hover,&.is-selected {
+            color:orange;
+            cursor:pointer;
+        }
+        
+    }
 }

@@ -1,0 +1,33 @@
+﻿@using RateMatch.Mvc.Models.MatchReviews;
+@model MatchReviewEditViewModel
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <h2>@ViewData["Title"]</h2>
+        @if(Model.Item != null)
+        {
+            <form asp-route-id="@Model.Item.Id" asp-action="Edit" method="POST">
+                <div>
+                    <div class="form-group py-1">
+                        <label>Select rating:</label>
+                        <select class="form-control" asp-items="Model.RatingChoices" asp-for="Item.ReviewRating"></select>
+                    </div>
+                    <div class="form-group py-1">
+                        <label>Content: </label>
+                        @if (Model.Item != null)
+                        {
+                            <textarea class="form-control" asp-for="Item.ReviewContent"></textarea>
+                        }
+                    </div>
+                    <hr />
+                    <div class="form-group py-1">
+                        <button class="btn btn-primary">Save</button>
+                        <a
+                            asp-route-id="@Model.Item.Id"
+                            asp-action="Delete"
+                            class="btn btn-sm btn-secondary">Delete</a>
+                    </div>
+                </div>
+            </form>
+        }
+    </div>
+</div>

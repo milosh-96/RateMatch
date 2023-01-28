@@ -21,15 +21,20 @@ html {
   min-height: 100%;
 }
 
+.form-group label {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
 .navbar {
   background: linear-gradient(#a31621 2%, #fff 20%);
 }
 
-.card {
+#match-cards-view .card {
   background: linear-gradient(#bfdbf7 2%, #fff 10%);
   border: 0;
 }
-.card:hover {
+#match-cards-view .card:hover {
   background: linear-gradient(#db222a 2%, #fff 10%);
   cursor: pointer;
 }
@@ -41,4 +46,12 @@ footer {
   padding-top: 40px;
   padding-bottom: 50px;
   margin-top: 100px;
+}
+
+.reviews-rate-widget .review-star {
+  color: #ccc;
+}
+.reviews-rate-widget .review-star:hover, .reviews-rate-widget .review-star.is-selected {
+  color: orange;
+  cursor: pointer;
 }
