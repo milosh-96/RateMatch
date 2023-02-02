@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -62,8 +63,10 @@ namespace RateMatch.Mvc.Controllers
         }
 
         // GET: SportsMatches/Create
+        [Authorize]
         public IActionResult Create()
         {
+            ViewData["Title"] = "Submit new Match";
             return View();
         }
 
@@ -71,6 +74,7 @@ namespace RateMatch.Mvc.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("MatchName,MatchResult,Sport,Competition,PlayedAt")] SportsMatchDto form)
         {

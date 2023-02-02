@@ -27,7 +27,7 @@ namespace RateMatch.Mvc.Areas.Api.Controllers
             matches.ForEach(x => x.Url = Url.Action(
                         "Details", "SportsMatches",
                         new { id = x.Id, slug = x.Slug, area=""}));
-            return matches;
+            return matches.OrderByDescending(x=>x.PlayedAt).ToList();
         }
 
         // GET api/<MatchesController>/5
