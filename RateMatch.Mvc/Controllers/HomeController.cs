@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RateMatch.Mvc.Data;
 using RateMatch.Mvc.Models;
+using RateMatch.Mvc.Models.Home;
 using System.Diagnostics;
 
 namespace RateMatch.Mvc.Controllers
@@ -17,8 +19,14 @@ namespace RateMatch.Mvc.Controllers
 
         public IActionResult Index()
         {
-            
-            return View();
+            HomePageViewModel viewModel = new HomePageViewModel()
+            {
+                Reviews = _context.MatchReviews
+                .Include(x => x.Match)
+                .Include(x => x.User)
+                .OrderBy(x => x.CreatedAt).ToList()
+            };
+            return View(viewModel);
         }
 
         public IActionResult Privacy()

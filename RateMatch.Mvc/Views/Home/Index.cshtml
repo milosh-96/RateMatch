@@ -1,5 +1,7 @@
 ﻿@using RateMatch.Mvc.Data;
-@model List<SportsMatch>
+@using RateMatch.Mvc.Models.Home;
+@using RateMatch.Mvc.Views.MatchReviews.Partials;
+@model HomePageViewModel
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -7,75 +9,51 @@
 <div>
     <div class="row">
         <div class="col col-12">
-            <h2>Welcome to Rate Match!</h2>
-            <p>You can add comment on available matches or submit new matches.</p>
-            <div id="like_button_container"></div>
+            <div class="welcome-text">
+                <h2>Welcome to Rate Match!</h2>
+                <p>You can add comment on available matches or submit new matches.</p>
+                <div id="like_button_container"></div>
+            </div>
 
         </div>
     </div>
 
     <div class="row">
-        <div class="col col-12">
-            <h3>Recent Matches</h3>
-        </div>
-
+        <div class="col-12 col-md-6">
+        <h3>Recent Matches</h3>
         <div id="match-cards-view">
-            <div>
-                <div class="ph-item">
-                    <div class="ph-col-12">
-                        <div class="ph-picture"></div>
-                        <div class="ph-row">
-                            <div class="ph-col-12 big"></div>
-                            <div class="ph-col-4 empty big"></div>
-                            <div class="ph-col-4 empty big"></div>
-                            <div class="ph-col-2 big"></div>
-                            <div class="ph-col-2 big"></div>
-                            <div class="ph-col-12 empty"></div>
-                            <div class="ph-col-12 empty"></div>
-                            <div class="ph-col-12"></div>
+            
+
+            <div class="placeholder-glow">
+                    @for(int i = 0; i < 8; i++)
+                    {
+                        <div>
+                            <p></p>
+                            <div class="col-12 placeholder placeholder-lg"></div>
+                            <div class="col-3 placeholder"></div>
+                            <div class="col-3 placeholder"></div>
+                            <p></p>
                         </div>
-                    </div>
-                </div><div class="ph-item">
-                    <div class="ph-col-12">
-                        <div class="ph-picture"></div>
-                        <div class="ph-row">
-                            <div class="ph-col-12 big"></div>
-                            <div class="ph-col-4 empty big"></div>
-                            <div class="ph-col-4 empty big"></div>
-                            <div class="ph-col-2 big"></div>
-                            <div class="ph-col-2 big"></div>
-                            <div class="ph-col-12 empty"></div>
-                            <div class="ph-col-12 empty"></div>
-                            <div class="ph-col-12"></div>
-                        </div>
-                    </div>
-                </div>
+                    }
+
             </div>
         </div>
-        @*@foreach (var item in Model)
-        {
-            <div class="col col-md-4">
-                <div class="card" style="width: 100%">
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <a asp-action="Details"
-                                asp-route-id="@item.Id">@item.MatchName @item.MatchResult</a>
-                        </h5>
-                        <h6 class="card-subtitle mb-2 text-muted">@item.Competition</h6>
-                        @if (item.Reviews.Count > 0)
-                        {
-                            <p class="card-text">
-                                <strong style="color:orange">
-                                    @item.Reviews.FirstOrDefault().ReviewRating
-                                </strong> - <span>@item.Reviews.FirstOrDefault().ReviewContent</span>
-                            </p>
-                        }
-                        <a href="#" class="btn btn-sm btn-primary">Reviews</a>
-                        <a href="#" class="btn btn-sm btn-primary">Match Highlights (external)</a>
-                    </div>
-                </div>
-                </div>
-        }*@
+        </div>
+        <div class="col col-12 col-md-6">
+            <h3>Latest Reviews</h3>
+            @if(Model.Reviews != null)
+            {
+                @foreach (var item in Model.Reviews)
+                {
+                    var itemViewModel = new MatchReviewItemPartialViewModel()
+                    {
+                        Item = item,
+                        IsCurrentUserItem = false
+                    };
+                        <partial model="itemViewModel" name="../MatchReviews/Partials/_MatchReviewItemPartial" />
+                } 
+            }
+        </div>
     </div>
     
 </div>

@@ -17,9 +17,10 @@ namespace RateMatch.Mvc.Areas.Api.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public MatchReviewsController(ApplicationDbContext context)
+        public MatchReviewsController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         // GET: api/<MatchReviewsController>

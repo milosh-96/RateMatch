@@ -13,13 +13,9 @@ namespace RateMatch.Mvc.Areas.Api.Controllers
         public IActionResult CheckLoginStatus()
         {
             var status = false;
-            try
+            if(HttpContext.User != null && HttpContext.User.Identity != null) 
             {
                 status = HttpContext.User.Identity.IsAuthenticated;
-            }
-            catch(Exception ex)
-            {
-                status = false;
             }
             return new JsonResult(status);
         }

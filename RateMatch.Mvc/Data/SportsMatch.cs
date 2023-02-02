@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Policy;
+using System.Text.Json.Serialization;
 
 namespace RateMatch.Mvc.Data
 {
@@ -28,6 +29,7 @@ namespace RateMatch.Mvc.Data
         public DateTime PlayedAt { get; set; } = DateTime.UtcNow;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
+        [JsonIgnore]
         public List<MatchReview> Reviews { get; set; } = new List<MatchReview>();
 
 
