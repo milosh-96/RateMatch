@@ -21,7 +21,10 @@ namespace RateMatch.Mvc.Data
                 .Property(b => b.EditKey)
                 .HasValueGenerator<GuidValueGenerator>();
         }
+        public DbSet<Country> Countries => Set<Country>();
         public DbSet<SportsMatch> SportsMatches => Set<SportsMatch>();
         public DbSet<MatchReview> MatchReviews => Set<MatchReview>();
+        public DbSet<Competition> Competitions => Set<Competition>();
+        public DbSet<Sport> Sports => Set<Sport>();
     }
 }

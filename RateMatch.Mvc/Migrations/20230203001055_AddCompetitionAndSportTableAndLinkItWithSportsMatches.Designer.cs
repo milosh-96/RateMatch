@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using RateMatch.Mvc.Data;
@@ -11,9 +12,10 @@ using RateMatch.Mvc.Data;
 namespace RateMatch.Mvc.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230203001055_AddCompetitionAndSportTableAndLinkItWithSportsMatches")]
+    partial class AddCompetitionAndSportTableAndLinkItWithSportsMatches
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -137,8 +139,9 @@ namespace RateMatch.Mvc.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CountryId")
-                        .HasColumnType("integer");
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("varchar(256)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -153,38 +156,9 @@ namespace RateMatch.Mvc.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CountryId");
-
                     b.HasIndex("SportId");
 
                     b.ToTable("Competitions");
-                });
-
-            modelBuilder.Entity("RateMatch.Mvc.Data.Country", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("CountryCode")
-                        .IsRequired()
-                        .HasColumnType("varchar(256)");
-
-                    b.Property<float>("Latitude")
-                        .HasColumnType("real");
-
-                    b.Property<float>("Longitude")
-                        .HasColumnType("real");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("varchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Countries");
                 });
 
             modelBuilder.Entity("RateMatch.Mvc.Data.IdentityEntities.ApplicationRole", b =>
@@ -436,15 +410,9 @@ namespace RateMatch.Mvc.Migrations
 
             modelBuilder.Entity("RateMatch.Mvc.Data.Competition", b =>
                 {
-                    b.HasOne("RateMatch.Mvc.Data.Country", "Country")
-                        .WithMany("Competitions")
-                        .HasForeignKey("CountryId");
-
                     b.HasOne("RateMatch.Mvc.Data.Sport", "Sport")
                         .WithMany()
                         .HasForeignKey("SportId");
-
-                    b.Navigation("Country");
 
                     b.Navigation("Sport");
                 });
@@ -478,11 +446,6 @@ namespace RateMatch.Mvc.Migrations
             modelBuilder.Entity("RateMatch.Mvc.Data.Competition", b =>
                 {
                     b.Navigation("Matches");
-                });
-
-            modelBuilder.Entity("RateMatch.Mvc.Data.Country", b =>
-                {
-                    b.Navigation("Competitions");
                 });
 
             modelBuilder.Entity("RateMatch.Mvc.Data.SportsMatch", b =>

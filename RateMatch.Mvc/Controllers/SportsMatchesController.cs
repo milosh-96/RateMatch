@@ -41,8 +41,8 @@ namespace RateMatch.Mvc.Controllers
             }
 
             var sportsMatch = await _context.SportsMatches
-                .Include(x=>x.Reviews)
-                .ThenInclude(x=>x.User)
+                .Include(x=>x.Reviews).ThenInclude(x=>x.User)
+                .Include(x=>x.Competition).ThenInclude(x=>x.Sport)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (sportsMatch == null)
             {
@@ -58,7 +58,7 @@ namespace RateMatch.Mvc.Controllers
                 viewModel.IsLoggedIn = true;
 
             }
-            ViewData["Title"] = sportsMatch.MatchName + " ("+sportsMatch.Sport + ")";
+            ViewData["Title"] = sportsMatch.MatchName + " ("+sportsMatch.Competition.Sport.Name + ")";
             return View(viewModel);
         }
 
@@ -81,26 +81,31 @@ namespace RateMatch.Mvc.Controllers
             SportsMatch sportsMatch = new SportsMatch();
             if (ModelState.IsValid)
             {
-               
-                sportsMatch.MatchName = form.MatchName.Trim();
-                sportsMatch.Slug = form.MatchName;
-                sportsMatch.MatchResult = form.MatchResult.Trim();
-                sportsMatch.Competition = form.Competition.Trim();
-                sportsMatch.Sport = form.Sport.Trim();
-                // parse as utc date time //
-                sportsMatch.PlayedAt = DateTimeOffset.Parse(form.PlayedAt).UtcDateTime;
+                Competition? competition = _context.Competitions
+                        .Where(x => x.Id == form.CompetitionId)
+                        .Include(x => x.Sport).FirstOrDefault();
+                if (competition != null)
+                {
+                    sportsMatch.MatchName = form.MatchName.Trim();
+                    sportsMatch.Slug = form.MatchName;
+                    sportsMatch.MatchResult = form.MatchResult.Trim();
+                    sportsMatch.CompetitionId = competition.Id;
+                    // parse as utc date time //
+                    sportsMatch.PlayedAt = DateTimeOffset.Parse(form.PlayedAt).UtcDateTime;
 
-                string slug = new Slugify.SlugHelper().GenerateSlug(
-                   String.Format("{0} {1} {2}",
-                   sportsMatch.Sport,
-                   sportsMatch.Competition,
-                   sportsMatch.MatchName
-                   )
-                );
-                sportsMatch.Slug = slug;
-               _context.Add(sportsMatch);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                    string slug = new Slugify.SlugHelper().GenerateSlug(
+                       String.Format("{0} {1} {2}",
+                       competition.Sport.Name,
+                       competition.Name,
+                       sportsMatch.MatchName
+                       )
+                    );
+                    sportsMatch.Slug = slug;
+                    _context.Add(sportsMatch);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                TempData["Error"] = "Competition ID isn't assigned or the competition doesn't exist.";
             }
 
             return View(sportsMatch);

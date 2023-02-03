@@ -20,11 +20,8 @@ namespace RateMatch.Mvc.Data
         [Column(TypeName = "varchar(256)")]
         public string MatchResult { get; set; } = "0:0";
 
-        [Column(TypeName = "varchar(256)")]
-        public string Sport { get; set; } = "";
-
-        [Column(TypeName = "varchar(256)")]
-        public string Competition { get; set; } = "";
+        public Competition? Competition { get; set; }
+        public int? CompetitionId { get; set; } 
 
         public DateTime PlayedAt { get; set; } = DateTime.UtcNow;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
@@ -44,15 +41,15 @@ namespace RateMatch.Mvc.Data
     {
         [Required]
         public string MatchName { get; set; } = "";
+
         [Required]
         public string MatchResult { get; set; } = "";
+
         [Required]
-        public string Sport { get; set; } = "";
-        [Required]
-        public string Competition { get; set; } = "";
+        public int? CompetitionId { get; set; }
+
         [Required]
         public string PlayedAt { get; set; } = "";
-
        
     }
 }
