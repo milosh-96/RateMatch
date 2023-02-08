@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using RateMatch.Mvc.Data.IdentityEntities;
 using RateMatch.Mvc.Data;
 using Microsoft.EntityFrameworkCore.ValueGeneration;
+using Microsoft.CodeAnalysis;
 
 namespace RateMatch.Mvc.Data
 {
@@ -20,6 +21,11 @@ namespace RateMatch.Mvc.Data
                 .Entity<MatchReview>()
                 .Property(b => b.EditKey)
                 .HasValueGenerator<GuidValueGenerator>();
+
+            builder.Entity<MatchReview>()
+                .HasOne(u => u.User)
+                .WithMany(x=>x.Reviews).OnDelete(DeleteBehavior.Cascade);
+
         }
         public DbSet<Country> Countries => Set<Country>();
         public DbSet<SportsMatch> SportsMatches => Set<SportsMatch>();

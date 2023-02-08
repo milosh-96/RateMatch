@@ -12,5 +12,7 @@ namespace RateMatch.Mvc.Data.IdentityEntities
             get { return base.PasswordHash; }
             set { base.PasswordHash = value; }
         }
+
+        public List<MatchReview> Reviews { get; set; } = new List<MatchReview>();
     }
 }
