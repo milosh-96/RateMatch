@@ -4,7 +4,7 @@
 
 namespace RateMatch.Mvc.Migrations
 {
-    public partial class Test : Migration
+    public partial class FixForeignKeyBetweenUserAndReviews : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
