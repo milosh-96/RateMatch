@@ -76,7 +76,7 @@ namespace RateMatch.Mvc.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MatchName,MatchResult,Sport,Competition,PlayedAt")] SportsMatchDto form)
+        public async Task<IActionResult> Create([Bind("MatchName,MatchResult,Sport,CompetitionId,PlayedAt")] SportsMatchDto form)
         {
             SportsMatch sportsMatch = new SportsMatch();
             if (ModelState.IsValid)

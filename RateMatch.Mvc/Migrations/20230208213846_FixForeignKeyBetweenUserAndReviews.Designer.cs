@@ -12,8 +12,8 @@ using RateMatch.Mvc.Data;
 namespace RateMatch.Mvc.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230208213846_Test")]
-    partial class Test
+    [Migration("20230208213846_FixForeignKeyBetweenUserAndReviews")]
+    partial class FixForeignKeyBetweenUserAndReviews
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
