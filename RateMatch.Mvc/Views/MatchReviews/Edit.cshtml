@@ -21,10 +21,15 @@
                     <hr />
                     <div class="form-group py-1">
                         <button class="btn btn-primary">Save</button>
+                        <a asp-route-id="@Model.Item.MatchId"
+                        asp-fragment="review-@Model.Item.Id"
+                       asp-action="Details"
+                       asp-controller="SportsMatches"
+                       class="btn btn-secondary">Cancel</a>
                         <a
                             asp-route-id="@Model.Item.Id"
                             asp-action="Delete"
-                            class="btn btn-sm btn-secondary">Delete</a>
+                            class="btn btn-sm btn-danger">Delete</a>
                     </div>
                 </div>
             </form>

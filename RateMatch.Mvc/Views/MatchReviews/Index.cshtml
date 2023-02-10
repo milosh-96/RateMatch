@@ -1,0 +1,15 @@
+﻿@using RateMatch.Mvc.Models.MatchReviews;
+@using RateMatch.Mvc.Views.MatchReviews.Partials;
+@model LatestReviewsViewModel
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        
+            @foreach (var item in Model.Items)
+            {<div>
+                <partial name="Partials/_MatchReviewItemPartial" model="MatchReviewItemPartialViewModel.Create(item)" />
+             </div>
+            }
+        
+    </div>
+</div>

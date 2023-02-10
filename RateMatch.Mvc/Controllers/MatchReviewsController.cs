@@ -25,9 +25,24 @@ namespace RateMatch.Mvc.Controllers
         // GET: MatchReviewsController
         public ActionResult Index()
         {
-            return View();
+            // redirect to latest action for now //
+            return RedirectToAction(nameof(IndexOfLatest));
+            ViewData["Title"] = "Latest Reviews";
+            LatestReviewsViewModel viewModel = new LatestReviewsViewModel();
+            viewModel.Items = _context.MatchReviews.Include(x=>x.User).Include(x=>x.Match)
+                .OrderByDescending(x => x.CreatedAt).ToList();
+            return View(viewModel);
         }
-
+        [HttpGet("/latest-reviews")]
+        public ActionResult IndexOfLatest()
+        {
+            ViewData["Title"] = "Latest Reviews";
+            LatestReviewsViewModel viewModel = new LatestReviewsViewModel();
+            viewModel.Items = _context.MatchReviews.Include(x=>x.User).Include(x=>x.Match)
+                .OrderByDescending(x => x.CreatedAt).ToList();
+            return View("Index",viewModel);
+        }
+        
         // GET: MatchReviewsController/Details/5
         public ActionResult Details(int id)
         {
