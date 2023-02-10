@@ -5,6 +5,11 @@
 @{
     ApplicationUserDto currentUserGlobal = (await userManager.GetUserAsync(User)).ToDto();
 }
+@section JsonLd {
+    <script type="application/ld+json">
+        @Html.Raw(Model.Item.ToJsonLd());
+    </script>
+}
 <div>
     <div style="width:100%;background:#fff;border-bottom:3px solid #ccc;">
         <h1>@ViewData["Title"]</h1>

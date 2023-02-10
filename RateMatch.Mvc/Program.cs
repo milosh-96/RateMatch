@@ -5,6 +5,7 @@ using RateMatch.Mvc.Data;
 using RateMatch.Mvc.Data.IdentityEntities;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using RateMatch.Mvc.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddTransient<IEmailSender, RateMatch.Mvc.Services.Mailing.EmailSender>();
@@ -20,6 +21,9 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => {
     })
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+
+// service layer services //
+builder.Services.AddScoped<MatchService>();
 
 var app = builder.Build();
 

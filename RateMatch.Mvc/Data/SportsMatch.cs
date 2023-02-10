@@ -20,6 +20,7 @@ namespace RateMatch.Mvc.Data
         [Column(TypeName = "varchar(256)")]
         public string MatchResult { get; set; } = "0:0";
 
+        [JsonIgnore]
         public Competition? Competition { get; set; }
         public int? CompetitionId { get; set; } 
 
@@ -52,4 +53,5 @@ namespace RateMatch.Mvc.Data
         public string PlayedAt { get; set; } = "";
        
     }
+
 }

@@ -12,7 +12,7 @@ class MatchItemsView extends React.Component {
         };
     }
     componentDidMount() {
-            fetch("/api/matches")
+            fetch("/api/sportsmatches")
                 .then(res => res.json())
                 .then(
                     (result) => {

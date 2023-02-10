@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using RateMatch.Mvc.Data;
 using RateMatch.Mvc.Data.IdentityEntities;
 using RateMatch.Mvc.Models.SportsMatches;
+using RateMatch.Mvc.Services;
 
 namespace RateMatch.Mvc.Controllers
 {
@@ -17,19 +18,25 @@ namespace RateMatch.Mvc.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly MatchService _matchService;
 
 
 
-        public SportsMatchesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public SportsMatchesController(ApplicationDbContext context,
+            UserManager<ApplicationUser> userManager
+,
+            MatchService matchService
+            )
         {
             _context = context;
             _userManager = userManager;
+            _matchService = matchService;
         }
 
         // GET: SportsMatches
         public async Task<IActionResult> Index()
         {
-              return View(await _context.SportsMatches.ToListAsync());
+              return View(await _matchService.GetAllAsync());
         }
 
         // GET: SportsMatches/Details/5
@@ -40,10 +47,7 @@ namespace RateMatch.Mvc.Controllers
                 return NotFound();
             }
 
-            var sportsMatch = await _context.SportsMatches
-                .Include(x=>x.Reviews).ThenInclude(x=>x.User)
-                .Include(x=>x.Competition).ThenInclude(x=>x.Sport)
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var sportsMatch = await _matchService.SingleAsync(id.Value);
             if (sportsMatch == null)
             {
                 return NotFound();
@@ -119,7 +123,7 @@ namespace RateMatch.Mvc.Controllers
                 return NotFound();
             }
 
-            var sportsMatch = await _context.SportsMatches.FindAsync(id);
+            var sportsMatch = await _matchService.SingleAsync(id.Value);
             if (sportsMatch == null)
             {
                 return NotFound();

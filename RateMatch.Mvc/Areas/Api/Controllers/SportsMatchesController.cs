@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RateMatch.Mvc.Data;
+using RateMatch.Mvc.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -10,23 +11,33 @@ namespace RateMatch.Mvc.Areas.Api.Controllers
     [Area("Api")]
     [Route("{area}/[controller]")]
     [ApiController]
-    public class MatchesController : ControllerBase
+    public class SportsMatchesController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private readonly MatchService _matchService;
 
-        public MatchesController(ApplicationDbContext context)
+        public SportsMatchesController(MatchService matchService,ApplicationDbContext context)
         {
+            _matchService = matchService;
             _context = context;
         }
+
 
         // GET: api/<MatchesController>
         [HttpGet]
         public async Task<List<SportsMatch>> Get()
         {
-            List<SportsMatch> matches = await _context.SportsMatches.ToListAsync();
-            matches.ForEach(x => x.Url = Url.Action(
-                        "Details", "SportsMatches",
-                        new { id = x.Id, slug = x.Slug, area=""}));
+            List<SportsMatch> matches = await _matchService.GetAllAsync();
+            matches.ForEach(x => {
+                if (x.Id > 0 && x.Slug != null)
+                {
+                    x.Url = Url.Action(
+                            "Details", "SportsMatches",
+                            new { id = x.Id, slug = x.Slug, area = "" }
+                            ) ?? "";
+                }
+                });
+
             return matches.OrderByDescending(x=>x.PlayedAt).ToList();
         }
 
@@ -34,7 +45,7 @@ namespace RateMatch.Mvc.Areas.Api.Controllers
         [HttpGet("{id}")]
         public async Task<SportsMatch?> Get(int id)
         {
-            return await _context.SportsMatches.Where(x => x.Id == id).Include(x=>x.Reviews).FirstOrDefaultAsync();
+            return await _matchService.SingleAsync(id);
         }
 
         // POST api/<MatchesController>
