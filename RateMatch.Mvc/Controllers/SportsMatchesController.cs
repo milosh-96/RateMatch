@@ -68,10 +68,20 @@ namespace RateMatch.Mvc.Controllers
 
         // GET: SportsMatches/Create
         [Authorize]
-        public IActionResult Create()
+        public IActionResult Create(int sportId = 1)
         {
             ViewData["Title"] = "Submit new Match";
-            return View();
+            SportsMatchCreateViewModel viewModel = new SportsMatchCreateViewModel();
+            viewModel.Sports = _context.Sports.ToList().Select(x => new SelectListItem()
+            {
+                Value = x.Id.ToString(),Text = x.Name,
+                Selected = x.Id == sportId
+            });
+            viewModel.Competitions = _context.Competitions.Where(x=>x.SportId==sportId).ToList().Select(x=>new SelectListItem()
+            {
+                Value = x.Id.ToString(),Text = x.Name
+            });
+            return View(viewModel);
         }
 
         // POST: SportsMatches/Create
@@ -80,7 +90,7 @@ namespace RateMatch.Mvc.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MatchName,MatchResult,Sport,CompetitionId,PlayedAt")] SportsMatchDto form)
+        public async Task<IActionResult> Create([Bind("MatchName,MatchResult,Sport,CompetitionId,PlayedAt",Prefix ="ItemDto")] SportsMatchDto form)
         {
             SportsMatch sportsMatch = new SportsMatch();
             if (ModelState.IsValid)

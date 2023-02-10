@@ -33,7 +33,7 @@ namespace RateMatch.Mvc.Extensions
                 Author = new Person() { Name = x.User.UserName },
                 DatePublished = x.UpdatedAt,
                 ReviewBody = x.ReviewContent,
-                ReviewRating = new Rating()
+                ReviewRating = new Rating()                                
                 {
                     RatingValue = x.ReviewRating,
                 }
