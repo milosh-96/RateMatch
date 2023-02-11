@@ -40,7 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Update="appsettings.*.json" CopyToPublishDirectory="Never" />
-    <Content Update="appsettings.$(MSBuildThisFileName).json" CopyToPublishDirectory="PreserveNewest" />
+    <Content Update="appsettings.$(MSBuildThisFileName).json" CopyToPublishDirectory="Never" />
   </ItemGroup>
 
 
