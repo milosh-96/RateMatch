@@ -10,7 +10,8 @@ using RateMatch.Mvc.Services;
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddTransient<IEmailSender, RateMatch.Mvc.Services.Mailing.EmailSender>();
 // Add services to the container.
-var connectionString = builder.Configuration["ConnectionStrings:DevConnection"];
+var connectionString = builder.Configuration["ConnectionStrings:DefaultConnection"];
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();

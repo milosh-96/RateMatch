@@ -38,5 +38,10 @@
   <ItemGroup>
     <None Include="compilerconfig.json" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Update="appsettings.*.json" CopyToPublishDirectory="Never" />
+    <Content Update="appsettings.$(MSBuildThisFileName).json" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+
 
 </Project>
