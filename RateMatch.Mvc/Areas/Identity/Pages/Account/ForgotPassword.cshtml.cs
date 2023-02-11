@@ -69,7 +69,9 @@ namespace RateMatch.Mvc.Areas.Identity.Pages.Account
                     "/Account/ResetPassword",
                     pageHandler: null,
                     values: new { area = "Identity", code },
-                    protocol: Request.Scheme);
+                    protocol: Request.Scheme,
+                    host:SiteInfo.Domain
+                    );
 
                 await _emailSender.SendEmailAsync(
                     Input.Email,
