@@ -32,8 +32,7 @@ namespace RateMatch.Mvc.Data
 
     public class MatchReviewDto
     {
-        [Required]
-        [StringLength(2000,MinimumLength =5)]
+        [StringLength(2000,MinimumLength =0)]
         public string? ReviewContent { get; set; }
 
         [Required]
