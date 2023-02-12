@@ -56,30 +56,35 @@ namespace RateMatch.Mvc.Controllers
         }
 
         // POST: MatchReviewsController/Create
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
         public IActionResult Create(int matchId, SportsMatchDetailsViewModel form)
-        {
-            if(ModelState.IsValid)
+        {   var user = _userManager.GetUserAsync(User).Result;
+            if (!_context.MatchReviews.Any(x => x.MatchId == matchId && x.UserId == user.Id))
             {
-                var values = form.ReviewForm;
-                MatchReview review = new MatchReview();
-                review.UserId = _userManager.GetUserAsync(User).Result.Id;
-                review.AuthorName = values.AuthorName;
-                if (values.ReviewContent != null)
+                if (ModelState.IsValid)
                 {
-                    review.ReviewContent = values.ReviewContent.Trim();
+
+                    var values = form.ReviewForm;
+                    MatchReview review = new MatchReview();
+                    review.UserId = user.Id;
+                    review.AuthorName = values.AuthorName;
+                    if (values.ReviewContent != null)
+                    {
+                        review.ReviewContent = values.ReviewContent.Trim();
+                    }
+                    review.ReviewRating = values.ReviewRating;
+                    review.EditKey = Guid.NewGuid();
+                    review.MatchId = matchId;
+                    _context.MatchReviews.Add(review);
+                    _context.SaveChanges();
+                    return RedirectToAction("Details", "SportsMatches", new
+                    {
+                        id = matchId
+                    });
                 }
-                review.ReviewRating = values.ReviewRating;
-                review.EditKey = Guid.NewGuid();
-                review.MatchId = matchId;
-                _context.MatchReviews.Add(review);
-                _context.SaveChanges();
-                return RedirectToAction("Details", "SportsMatches", new
-                {
-                    id = matchId
-                });
             }
             TempData["Error"] = "Review couldn't be added.";
             return RedirectToAction("Details", "SportsMatches", new { id = matchId });

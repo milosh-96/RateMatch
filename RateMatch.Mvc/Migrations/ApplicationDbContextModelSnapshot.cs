@@ -157,7 +157,7 @@ namespace RateMatch.Mvc.Migrations
 
                     b.HasIndex("SportId");
 
-                    b.ToTable("Competitions");
+                    b.ToTable("Competitions", (string)null);
                 });
 
             modelBuilder.Entity("RateMatch.Mvc.Data.Country", b =>
@@ -184,7 +184,7 @@ namespace RateMatch.Mvc.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Countries");
+                    b.ToTable("Countries", (string)null);
                 });
 
             modelBuilder.Entity("RateMatch.Mvc.Data.IdentityEntities.ApplicationRole", b =>
@@ -323,7 +323,7 @@ namespace RateMatch.Mvc.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("MatchReviews");
+                    b.ToTable("MatchReviews", (string)null);
                 });
 
             modelBuilder.Entity("RateMatch.Mvc.Data.Sport", b =>
@@ -344,7 +344,7 @@ namespace RateMatch.Mvc.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Sports");
+                    b.ToTable("Sports", (string)null);
                 });
 
             modelBuilder.Entity("RateMatch.Mvc.Data.SportsMatch", b =>
@@ -380,7 +380,7 @@ namespace RateMatch.Mvc.Migrations
 
                     b.HasIndex("CompetitionId");
 
-                    b.ToTable("SportsMatches");
+                    b.ToTable("SportsMatches", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

@@ -17,6 +17,7 @@ namespace RateMatch.Mvc.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+           
             builder
                 .Entity<MatchReview>()
                 .Property(b => b.EditKey)
@@ -25,7 +26,7 @@ namespace RateMatch.Mvc.Data
             builder.Entity<MatchReview>()
                 .HasOne(u => u.User)
                 .WithMany(x=>x.Reviews).OnDelete(DeleteBehavior.Cascade);
-
+          
         }
         public DbSet<Country> Countries => Set<Country>();
         public DbSet<SportsMatch> SportsMatches => Set<SportsMatch>();
