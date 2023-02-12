@@ -80,7 +80,9 @@ namespace RateMatch.Mvc.Areas.Identity.Pages.Account
             await _emailSender.SendEmailAsync(
                 Input.Email,
                 "Confirm your email",
-                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.",
+                Request.Scheme,
+                SiteInfo.Domain);
 
             ModelState.AddModelError(string.Empty, "Verification email sent. Please check your email.");
             return Page();

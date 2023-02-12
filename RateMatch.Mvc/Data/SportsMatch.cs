@@ -27,6 +27,9 @@ namespace RateMatch.Mvc.Data
         public DateTime PlayedAt { get; set; } = DateTime.UtcNow;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
+
+
+
         [JsonIgnore]
         public List<MatchReview> Reviews { get; set; } = new List<MatchReview>();
 
