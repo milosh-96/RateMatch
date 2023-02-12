@@ -40,5 +40,12 @@ namespace RateMatch.Mvc.Areas.Api.Controllers
             return new JsonResult(false);
         }
 
+        [HttpPost("RejectCookies")]
+        public IActionResult RejectCookies()
+        {
+            HttpContext.Session.SetString("RejectedCookies", "yes");
+            return new JsonResult(true);
+        }
+
     }
 }
