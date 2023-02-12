@@ -13,24 +13,14 @@
         <button type="button" class="accept-policy close btn btn-sm btn-secondary" data-bs-dismiss="alert" aria-label="Close" data-cookie-string="@cookieString">
             <span aria-hidden="true">Accept</span>
         </button>
-        <button type="button" class="reject-policy close btn btn-sm btn-primary" data-bs-dismiss="alert" aria-label="Close" data-reject-cookie="yes">
-            <span aria-hidden="true">Reject</span>-
-        </button>
         <a class="btn btn-sm btn-secondary" asp-page="/Privacy">Learn More</a>
     </div>
     <script>
         (function () {
             var button = document.querySelector("#cookieConsent button[data-cookie-string]");
-            var rejectButton = document.querySelector("#cookieConsent button[data-reject-cookie]");
             button.addEventListener("click", function (event) {
                 document.cookie = button.dataset.cookieString;
-            }, false); 
-            rejectButton.addEventListener("click", function (event) {
-                fetch('/api/User/RejectCookies',{method:'post'}).then(function(data) {
-                    return data.json();
-                }).then(function(data) {return data;})
             }, false);
-           
         })();
     </script>
 }
