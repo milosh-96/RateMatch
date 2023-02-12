@@ -25,13 +25,6 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => {
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 builder.Services.AddDistributedMemoryCache();
 
-builder.Services.AddSession(options =>
-{
-    options.IdleTimeout = TimeSpan.FromSeconds(10);
-    options.Cookie.HttpOnly = true;
-    options.Cookie.IsEssential = true;
-});
-
 // service layer services //
 builder.Services.AddScoped<MatchService>();
 builder.Services.Configure<CookiePolicyOptions>(options =>
@@ -39,7 +32,7 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
     // This lambda determines whether user consent for non-essential 
     // cookies is needed for a given request.
     options.CheckConsentNeeded = context => true;
-    options.MinimumSameSitePolicy = SameSiteMode.None;
+    options.MinimumSameSitePolicy = SameSiteMode.Strict;
 });
 var app = builder.Build();
 
@@ -59,7 +52,6 @@ else
 //app.UseStatusCodePagesWithRedirects("/Error/{0}");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-app.UseSession();
 app.UseCookiePolicy();
 
 app.UseRouting();
