@@ -19,6 +19,7 @@ namespace RateMatch.Mvc.Areas.Api.Controllers
         }
 
         [HttpGet("GetCurrent")]
+
         public async Task<IActionResult> GetCurrentLoggedInUser()
         {
             if(HttpContext.User.Identity != null)

@@ -34,6 +34,8 @@ namespace RateMatch.Mvc.Controllers
         }
 
         // GET: SportsMatches
+        [Authorize(Roles = "Editor")]
+
         public async Task<IActionResult> Index()
         {
               return View(await _matchService.GetAllAsync());
@@ -67,7 +69,7 @@ namespace RateMatch.Mvc.Controllers
         }
 
         // GET: SportsMatches/Create
-        [Authorize]
+        [Authorize(Roles = "Editor")]
         public IActionResult Create(int sportId = 1)
         {
             ViewData["Title"] = "Submit new Match";
@@ -88,7 +90,7 @@ namespace RateMatch.Mvc.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Editor")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("MatchName,MatchResult,Sport,CompetitionId,PlayedAt",Prefix ="ItemDto")] SportsMatchDto form)
         {
@@ -125,6 +127,7 @@ namespace RateMatch.Mvc.Controllers
             return View(sportsMatch);
         }
 
+        [Authorize(Roles = "Editor")]
         // GET: SportsMatches/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -146,7 +149,8 @@ namespace RateMatch.Mvc.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,MatchName,MatchResult,Sport,Competition,PlayedAt,CreatedAt")] SportsMatch sportsMatch)
+        [Authorize(Roles ="Editor")]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,MatchName,MatchResult,Sport,CompetitionId,PlayedAt")] SportsMatch sportsMatch)
         {
             if (id != sportsMatch.Id)
             {
@@ -157,6 +161,7 @@ namespace RateMatch.Mvc.Controllers
             {
                 try
                 {
+                    sportsMatch.PlayedAt = sportsMatch.PlayedAt.ToUniversalTime();
                     _context.Update(sportsMatch);
                     await _context.SaveChangesAsync();
                 }
@@ -173,8 +178,10 @@ namespace RateMatch.Mvc.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(sportsMatch);
+            return RedirectToAction("Details",new { id = sportsMatch.Id, slug = sportsMatch.Slug });
         }
+
+        [Authorize(Roles = "Editor")]
 
         // GET: SportsMatches/Delete/5
         public async Task<IActionResult> Delete(int? id)
@@ -193,6 +200,8 @@ namespace RateMatch.Mvc.Controllers
 
             return View(sportsMatch);
         }
+
+        [Authorize(Roles = "Editor")]
 
         // POST: SportsMatches/Delete/5
         [HttpPost, ActionName("Delete")]
