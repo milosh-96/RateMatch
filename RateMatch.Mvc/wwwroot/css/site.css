@@ -26,6 +26,10 @@ html {
   text-transform: uppercase;
 }
 
+main {
+  min-height: 40vh;
+}
+
 .navbar {
   background: linear-gradient(#a31621 2%, #fff 20%);
 }

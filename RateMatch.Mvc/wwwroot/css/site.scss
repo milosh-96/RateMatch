@@ -41,6 +41,9 @@ body {
     //margin-bottom: 60px;
     //background: #1F7A8C;
 }
+main {
+    min-height: 40vh;
+}
 .navbar {
   background:linear-gradient($ruby-red 2%,#fff 20%);
 }
