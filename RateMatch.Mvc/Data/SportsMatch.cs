@@ -32,6 +32,12 @@ namespace RateMatch.Mvc.Data
 
         [JsonIgnore]
         public List<MatchReview> Reviews { get; set; } = new List<MatchReview>();
+       
+        [JsonIgnore]
+        public List<SportsMatchVideoPost> VideoPosts { get; set; } = new List<SportsMatchVideoPost>();
+
+        [JsonIgnore]
+        public List<ExternalContentLinkSportsMatch> ExternalContentLinks { get; set; } = new List<ExternalContentLinkSportsMatch>();
 
 
         [NotMapped]

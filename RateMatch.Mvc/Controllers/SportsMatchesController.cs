@@ -64,6 +64,15 @@ namespace RateMatch.Mvc.Controllers
                 viewModel.IsLoggedIn = true;
 
             }
+            if (sportsMatch.ExternalContentLinks.Any())
+            {
+                viewModel.Links = sportsMatch.ExternalContentLinks.Select(x => x.ExternalContentLink).ToList() ?? new List<ExternalContentLink>();
+            }
+            if (sportsMatch.VideoPosts.Any())
+            {
+                viewModel.VideoPosts = sportsMatch.VideoPosts.Select(x => x.VideoPost).ToList() ?? new List<VideoPost>();
+            }
+
             ViewData["Title"] = sportsMatch.MatchName + " ("+sportsMatch.Competition.Sport.Name + ")";
             return View(viewModel);
         }

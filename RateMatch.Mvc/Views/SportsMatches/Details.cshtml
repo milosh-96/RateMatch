@@ -13,18 +13,17 @@
 <div>
     <div style="width:100%;background:#fff;border-bottom:3px solid #ccc;">
         <h1>@ViewData["Title"]</h1>
-        <p>@Model.Item.PlayedAt.ToString("dd/MM/yyyy HH:mm")</p>
+        <p>@Model.Item.PlayedAt.ToString("dd/MM/yyyy HH:mm") UTC</p>
     </div>
 
     <div class="row">
         <div class="col-md-12">
             <button class="btn btn-sm btn-secondary" type="button" data-bs-toggle="collapse" data-bs-target="#user-reviews" aria-expanded="false" aria-controls="user-reviews">
                 Toggle Other Reviews
-
             </button>
         </div>
         <div class="col-md-6">
-            
+            <!--reviews-->
             <div class="collapse show" id="user-reviews">
                 <ul class="list-group">
                     @{
@@ -56,10 +55,43 @@
                         </li>
                     }
                 </ul>
-
-
-
             </div>
+            <!--reviews end-->
+            @if(Model.Links != null && Model.Links.Count > 0)
+            {
+                <!--external links-->
+                <div>
+                    <ul class="list-group">
+                        @foreach (var item in Model.Links)
+                        {
+                            <li class="list-group-item">
+                                <a title="@item.ToString()" target="_blank" href="@item.ExternalUrl">@item.ToString() &#129109;</a>
+                            </li>
+                        }
+                    </ul>
+
+                </div>
+                <!--external links end-->
+            }
+
+            @if(Model.VideoPosts != null && Model.VideoPosts.Count > 0)
+            {
+                <!--videos--->
+            <div>
+                <ul class="list-group">
+                    @foreach (var item in Model.VideoPosts)
+                    {
+                        <li class="list-group-item">
+                            <iframe width="420" height="315"
+                                src="https://www.youtube.com/embed/@item.VideoSourceUrl">
+                            </iframe>
+                        </li>
+                    }
+                </ul>
+                
+            </div>
+            <!--videos end-->
+            }
         </div>
         <div class="col-md-6">
             <div class="rating card">

@@ -24,6 +24,8 @@ namespace RateMatch.Mvc.Services
             return _context.SportsMatches
                 .Include(x => x.Reviews).ThenInclude(x => x.User)
                 .Include(x => x.Competition).ThenInclude(x => x.Sport)
+                .Include(x=>x.VideoPosts).ThenInclude(x=>x.VideoPost)
+                .Include(x=>x.ExternalContentLinks).ThenInclude(x=>x.ExternalContentLink)
                 .Where(x=>x.Id==id);
         }
 

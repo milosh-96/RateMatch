@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using RateMatch.Mvc.Data;
@@ -11,9 +12,10 @@ using RateMatch.Mvc.Data;
 namespace RateMatch.Mvc.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230216005018_AddVideoPostsTable")]
+    partial class AddVideoPostsTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -194,58 +196,6 @@ namespace RateMatch.Mvc.Migrations
                     b.ToTable("Countries");
                 });
 
-            modelBuilder.Entity("RateMatch.Mvc.Data.ExternalContentLink", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("ExternalUrl")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("Source")
-                        .IsRequired()
-                        .HasColumnType("varchar(256)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ExternalContentLinks");
-                });
-
-            modelBuilder.Entity("RateMatch.Mvc.Data.ExternalContentLinkSportsMatch", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ExternalContentLinkId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("SportsMatchId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ExternalContentLinkId");
-
-                    b.HasIndex("SportsMatchId", "ExternalContentLinkId")
-                        .IsUnique();
-
-                    b.ToTable("ExternalContentLinkSportsMatches");
-                });
-
             modelBuilder.Entity("RateMatch.Mvc.Data.IdentityEntities.ApplicationRole", b =>
                 {
                     b.Property<int>("Id")
@@ -278,14 +228,14 @@ namespace RateMatch.Mvc.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "99087970-939c-4463-9902-8582b024add7",
+                            ConcurrencyStamp = "b0f7e294-0662-4532-a876-b22752ff2c1d",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "ee1a405b-98f4-40e7-9496-034893eab47e",
+                            ConcurrencyStamp = "92576bce-5d99-4d76-834d-4c63a05cb0e4",
                             Name = "Editor",
                             NormalizedName = "EDITOR"
                         });
@@ -493,16 +443,12 @@ namespace RateMatch.Mvc.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<string>("Source")
-                        .IsRequired()
-                        .HasColumnType("varchar(256)");
+                    b.Property<string>("SourceUrl")
+                        .HasColumnType("text");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("VideoSourceUrl")
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(256)");
 
                     b.HasKey("Id");
 
@@ -575,25 +521,6 @@ namespace RateMatch.Mvc.Migrations
                     b.Navigation("Sport");
                 });
 
-            modelBuilder.Entity("RateMatch.Mvc.Data.ExternalContentLinkSportsMatch", b =>
-                {
-                    b.HasOne("RateMatch.Mvc.Data.ExternalContentLink", "ExternalContentLink")
-                        .WithMany("SportsMatches")
-                        .HasForeignKey("ExternalContentLinkId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("RateMatch.Mvc.Data.SportsMatch", "SportsMatch")
-                        .WithMany("ExternalContentLinks")
-                        .HasForeignKey("SportsMatchId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ExternalContentLink");
-
-                    b.Navigation("SportsMatch");
-                });
-
             modelBuilder.Entity("RateMatch.Mvc.Data.MatchReview", b =>
                 {
                     b.HasOne("RateMatch.Mvc.Data.SportsMatch", "Match")
@@ -650,11 +577,6 @@ namespace RateMatch.Mvc.Migrations
                     b.Navigation("Competitions");
                 });
 
-            modelBuilder.Entity("RateMatch.Mvc.Data.ExternalContentLink", b =>
-                {
-                    b.Navigation("SportsMatches");
-                });
-
             modelBuilder.Entity("RateMatch.Mvc.Data.IdentityEntities.ApplicationUser", b =>
                 {
                     b.Navigation("Reviews");
@@ -662,8 +584,6 @@ namespace RateMatch.Mvc.Migrations
 
             modelBuilder.Entity("RateMatch.Mvc.Data.SportsMatch", b =>
                 {
-                    b.Navigation("ExternalContentLinks");
-
                     b.Navigation("Reviews");
 
                     b.Navigation("VideoPosts");
