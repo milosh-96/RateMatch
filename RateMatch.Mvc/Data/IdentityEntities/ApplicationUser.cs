@@ -7,7 +7,7 @@ namespace RateMatch.Mvc.Data.IdentityEntities
     public class ApplicationUser : IdentityUser<int>
     {
         [JsonIgnore]
-        public override string PasswordHash
+        public override string? PasswordHash
         {
             get { return base.PasswordHash; }
             set { base.PasswordHash = value; }
