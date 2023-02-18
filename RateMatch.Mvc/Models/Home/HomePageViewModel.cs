@@ -6,5 +6,6 @@ namespace RateMatch.Mvc.Models.Home
     {
         public List<SportsMatch>? Matches { get; set; } = new List<SportsMatch>();
         public List<MatchReview>? Reviews { get; set; } = new List<MatchReview>();
+        public List<ExternalContentLink>? News { get; set; } = new List<ExternalContentLink>();
     }
 }

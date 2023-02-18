@@ -39,19 +39,29 @@
         </div>
         </div>
         <div class="col col-12 col-md-6">
-            <h3>Latest Reviews</h3>
-            @if(Model.Reviews != null)
-            {
-                @foreach (var item in Model.Reviews)
+            <div>
+                <h3>Latest Reviews</h3>
+                @if (Model.Reviews != null)
                 {
-                    var itemViewModel = new MatchReviewItemPartialViewModel()
+                    @foreach (var item in Model.Reviews)
+                    {
+                        var itemViewModel = new MatchReviewItemPartialViewModel()
                     {
                         Item = item,
                         IsCurrentUserItem = false
                     };
                         <partial model="itemViewModel" name="../MatchReviews/Partials/_MatchReviewItemPartial" />
-                } 
-            }
+                    }
+                }
+            </div>
+
+                <!--external links-->
+                <div>
+                <h3>Latest News</h3>
+                    <partial name="../Global/_NewsWidgetPartial.cshtml" model="Model.News">
+
+                </div>
+                <!--external links end-->
         </div>
     </div>
     

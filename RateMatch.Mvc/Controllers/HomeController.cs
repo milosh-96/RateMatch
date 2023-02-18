@@ -26,6 +26,7 @@ namespace RateMatch.Mvc.Controllers
                 .Include(x => x.User)
                 .OrderBy(x => x.CreatedAt).ToList()
             };
+            viewModel.News = _context.ExternalContentLinks.OrderByDescending(x => x.CreatedAt).Take(10).ToList();
             return View(viewModel);
         }
 

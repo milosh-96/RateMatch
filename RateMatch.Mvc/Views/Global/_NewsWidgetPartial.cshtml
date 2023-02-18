@@ -1,0 +1,11 @@
+﻿@using RateMatch.Mvc.Data;
+@model List<ExternalContentLink>
+
+<ul class="list-group">
+    @foreach (var item in Model)
+    {
+        <li class="list-group-item">
+            <a title="@item.ToString()" target="_blank" href="@item.ExternalUrl">@item.ToString() &#129109;</a>
+        </li>
+    }
+</ul>

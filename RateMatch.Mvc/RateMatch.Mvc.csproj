@@ -35,6 +35,7 @@
     <Folder Include="Areas\ControlArea\Data\" />
     <Folder Include="Areas\ControlArea\Models\" />
     <Folder Include="Data\Migrations\" />
+    <Folder Include="Views\Global\NewFolder\" />
   </ItemGroup>
 
   <ItemGroup>

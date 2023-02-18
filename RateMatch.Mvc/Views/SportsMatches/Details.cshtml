@@ -61,14 +61,7 @@
             {
                 <!--external links-->
                 <div>
-                    <ul class="list-group">
-                        @foreach (var item in Model.Links)
-                        {
-                            <li class="list-group-item">
-                                <a title="@item.ToString()" target="_blank" href="@item.ExternalUrl">@item.ToString() &#129109;</a>
-                            </li>
-                        }
-                    </ul>
+                    <partial name="../Global/_NewsWidgetPartial" model="Model.Links">
 
                 </div>
                 <!--external links end-->
