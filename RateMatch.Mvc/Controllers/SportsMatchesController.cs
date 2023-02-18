@@ -78,7 +78,7 @@ namespace RateMatch.Mvc.Controllers
         }
 
         // GET: SportsMatches/Create
-        [Authorize(Roles = "Editor")]
+        [Authorize]
         public IActionResult Create(int sportId = 1)
         {
             ViewData["Title"] = "Submit new Match";
@@ -99,7 +99,7 @@ namespace RateMatch.Mvc.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Authorize(Roles = "Editor")]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("MatchName,MatchResult,Sport,CompetitionId,PlayedAt",Prefix ="ItemDto")] SportsMatchDto form)
         {

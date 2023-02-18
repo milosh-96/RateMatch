@@ -1,6 +1,8 @@
 ﻿@using RateMatch.Mvc.Data;
 @using RateMatch.Mvc.Models.Home;
 @using RateMatch.Mvc.Views.MatchReviews.Partials;
+@inject SignInManager<ApplicationUser> SignInManager
+
 @model HomePageViewModel
 @{
     ViewData["Title"] = "Home Page";
@@ -20,10 +22,14 @@
     <div class="row">
         <div class="col-12 col-md-6">
         <h3>Recent Matches</h3>
-        <div id="match-cards-view">
-            
-
-            <div class="placeholder-glow">
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <a class="btn btn-secondary"
+               asp-action="Create"
+               asp-controller="SportsMatches">Submit New Match</a>
+            }
+            <div id="match-cards-view">
+                <div class="placeholder-glow">
                     @for(int i = 0; i < 8; i++)
                     {
                         <div>
