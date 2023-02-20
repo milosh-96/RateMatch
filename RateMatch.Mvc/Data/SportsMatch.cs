@@ -43,7 +43,10 @@ namespace RateMatch.Mvc.Data
         [NotMapped]
         public string Url { get; set; } = "";
 
-
+        public override string ToString()
+        {
+            return this.MatchName + " " + this.MatchResult;
+        }
     }
 
 

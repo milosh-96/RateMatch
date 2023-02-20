@@ -12,7 +12,27 @@
 }
 <div>
     <div style="width:100%;background:#fff;border-bottom:3px solid #ccc;">
-        <h1>@ViewData["Title"]</h1>
+        <div>
+            @if (Model.Item.Competition != null)
+            {
+                <div>
+                    @if(Model.Item.Competition.Sport != null) {
+                    <strong style="text-transform:uppercase">@Model.Item.Competition.Sport.Name: </strong>
+                    }
+                    <strong style="text-transform:uppercase">@Model.Item.Competition.Name</strong>
+            </div>
+            }
+            <h1 class="d-md-inline">@Model.Item.ToString()</h1>
+            @if (Model.Item.Reviews.Count > 0)
+            {
+                <span style="font-size:24px;color:orange">
+                    @for (int i = 1; i <= Math.Round(Model.Item.Reviews.Average(x => x.ReviewRating)); i++)
+                    {
+                        <i class="fa-solid fa-star"></i>
+                    }
+                </span>
+            }
+        </div>
         <p>@Model.Item.PlayedAt.ToString("dd/MM/yyyy HH:mm") UTC</p>
     </div>
 

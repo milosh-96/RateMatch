@@ -72,8 +72,12 @@ namespace RateMatch.Mvc.Controllers
             {
                 viewModel.VideoPosts = sportsMatch.VideoPosts.Select(x => x.VideoPost).ToList() ?? new List<VideoPost>();
             }
+            ViewData["Title"] = String.Format("{0}", sportsMatch.ToString());
 
-            ViewData["Title"] = sportsMatch.MatchName + " ("+sportsMatch.Competition.Sport.Name + ")";
+            if(sportsMatch.Competition != null && sportsMatch.Competition.Sport != null)
+            {
+                ViewData["Title"] = String.Format("{1},{2}: {0}", sportsMatch.ToString(), sportsMatch.Competition.Sport.Name,sportsMatch.Competition.Name);
+            }
             return View(viewModel);
         }
 
