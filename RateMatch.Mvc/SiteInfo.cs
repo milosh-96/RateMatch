@@ -4,7 +4,7 @@
     {
         public static string Name { get; set; } = "Rate Match";
         public static string FullName { get; set; } = "Rate Match - r8match.com";
-        public static string SiteTagline = "Reviews and opinions of sports fans."
+        public static string SiteTagline = "Reviews and opinions of sports fans.";
         public static string Domain { get; set; } = "r8match.com";
         public static string SiteUrl { get; set; } = "https://"+Domain;
         public static string AssetsUrl { get; set; } = "https://uploads."+Domain;
