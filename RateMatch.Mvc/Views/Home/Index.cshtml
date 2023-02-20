@@ -60,7 +60,12 @@
                     }
                 }
             </div>
-
+            <div>
+                <div>
+                    <h3>Quiz</h3>
+                    <partial name="../Global/_SportsTriviaQuizPartial.cshtml">
+                        <em>questions provided by the open trivia db</em>
+                </div>
                 <!--external links-->
                 <div>
                 <h3>Latest News</h3>
@@ -75,4 +80,6 @@
 
 @section Scripts {
 <script type="text/babel" src="~/js/apps/matchcardsview.js"></script>
+    <script type="text/babel" src="/js/apps/sportstriviaquiz/sportstriviaquiz.js"></script>
+
 }
