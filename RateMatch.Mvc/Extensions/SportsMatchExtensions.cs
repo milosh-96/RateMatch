@@ -30,7 +30,7 @@ namespace RateMatch.Mvc.Extensions
             List<Review> reviewsCollection = new List<Review>();
             item.Reviews.ForEach(x => reviewsCollection.Add(new Review()
             {
-                Author = new Person() { Name = x.User.UserName },
+                Author = new Person() { Name = x.AuthorName },
                 DatePublished = x.UpdatedAt,
                 ReviewBody = x.ReviewContent,
                 ReviewRating = new Rating()                                

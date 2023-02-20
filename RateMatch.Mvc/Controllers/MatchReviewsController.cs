@@ -8,6 +8,7 @@ using RateMatch.Mvc.Data;
 using RateMatch.Mvc.Data.IdentityEntities;
 using RateMatch.Mvc.Models.MatchReviews;
 using RateMatch.Mvc.Models.SportsMatches;
+using RateMatch.Mvc.Views.MatchReviews.Partials;
 
 namespace RateMatch.Mvc.Controllers
 {
@@ -59,17 +60,14 @@ namespace RateMatch.Mvc.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
-        public IActionResult Create(int matchId, SportsMatchDetailsViewModel form)
-        {   var user = _userManager.GetUserAsync(User).Result;
-            if (!_context.MatchReviews.Any(x => x.MatchId == matchId && x.UserId == user.Id))
-            {
+        public IActionResult Create(int matchId, MatchReviewFormViewModel form)
+        {   
                 if (ModelState.IsValid)
                 {
 
                     var values = form.ReviewForm;
                     MatchReview review = new MatchReview();
-                    review.UserId = user.Id;
+                    //review.UserId = user.Id;
                     review.AuthorName = values.AuthorName;
                     if (values.ReviewContent != null)
                     {
@@ -80,12 +78,13 @@ namespace RateMatch.Mvc.Controllers
                     review.MatchId = matchId;
                     _context.MatchReviews.Add(review);
                     _context.SaveChanges();
+                TempData["Status"] = String.Format(
+                    "Your Edit key is {0}. With this key you will be able to edit this review later.", review.EditKey); 
                     return RedirectToAction("Details", "SportsMatches", new
                     {
                         id = matchId
                     });
                 }
-            }
             TempData["Error"] = "Review couldn't be added.";
             return RedirectToAction("Details", "SportsMatches", new { id = matchId });
         }

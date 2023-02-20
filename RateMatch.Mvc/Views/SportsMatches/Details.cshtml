@@ -87,67 +87,9 @@
             }
         </div>
         <div class="col-md-6">
-            <div class="rating card">
-
-                @if (Model.IsLoggedIn)
-                {
-                   <h3>My Reviews</h3>
-                    <ul class="list-group">
-
-                       
-
-                        @foreach (var item in Model.Item.Reviews.Where(x=>x.UserId==currentUserGlobal.Id).ToList())
-                        {
-                            bool userItem = false;
-                            if (currentUserGlobal != null && currentUserGlobal.Id == item.UserId)
-                            {
-                                userItem = true;
-                            }
-                            <li class="list-group-item">
-                                @{
-                                    MatchReviewItemPartialViewModel partialModel = new MatchReviewItemPartialViewModel()
-                    {
-                        Item = item,
-                        IsCurrentUserItem = userItem
-                    };
-
-                                }
-                                <partial name="../MatchReviews/Partials/_MatchReviewItemPartial.cshtml" model="partialModel" />
-                            </li>
-                        }
-                    </ul>
-                    <hr />
-
-                    <form method="post"
-                      asp-route-matchId="@Model.Item.Id"
-                      asp-action="Create" asp-controller="MatchReviews">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <div class="form-group card-body">
-                            <h3>Write a Review</h3>
-                            <select class="form-control" asp-for="ReviewForm.ReviewRating">
-                                <option value="1">1 - Bad Match!</option>
-                                <option value="2">2 - Nothing Special</option>
-                                <option value="3">3 - Solid</option>
-                                <option value="4">4 - Very good match</option>
-                                <option value="5">5 - True classic!</option>
-                            </select>
-                        </div>
-                        <div class="form-group card-body pt-0">
-                            <textarea asp-for="ReviewForm.ReviewContent" class="form-control" placeholder="Analyze match in your words: tactics, subs, game decisions..."></textarea>
-                            <span asp-validation-for="ReviewForm.ReviewContent" class="text-danger"></span>
-                        </div>
-                        <div class="card-body pt-0">
-                            <button class="btn btn-primary">Post</button>
-                        </div>
-                    </form>
-                }
-                else
-                {
-                    <partial name="_PleaseLoginRegisterMessagePartial"></partial>
-                }
-                @*                <img src="/demo.jpg" style="width:100%" alt="Demo Image" />
-                *@
-            </div>
+            <partial name="../MatchReviews/Partials/_MatchReviewFormPartial"
+                model="new MatchReviewFormViewModel() {SportsMatch=Model.Item}"
+            />
         </div>
     </div>
 </div>

@@ -71,6 +71,16 @@
                         </div>
                     </div>
                 </div>
+            } 
+            @if(TempData["Status"] != null)
+            {
+                <div class="row">
+                    <div class="col-12">
+                        <div class="alert alert-success">
+                            @TempData["Status"]
+                        </div>
+                    </div>
+                </div>
             }
             @RenderBody()
         </main>

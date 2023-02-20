@@ -36,8 +36,11 @@ namespace RateMatch.Mvc.Data
         public string? ReviewContent { get; set; }
 
         [Required]
+        [Range(1,5,ErrorMessage ="The rating value must be between 1 and 5.")]
         public int ReviewRating { get; set; } = 5;
 
+        [Required(ErrorMessage ="Please enter your name.")]
+        [StringLength(25,MinimumLength =5,ErrorMessage ="Your name must be between 5 and 25 letters.")]
         public string AuthorName { get; set; } = "Guest";
       
     }

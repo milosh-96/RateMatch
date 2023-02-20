@@ -1,0 +1,38 @@
+﻿@using RateMatch.Mvc.Views.MatchReviews.Partials;
+@model MatchReviewFormViewModel
+<div class="rating card">
+@if(Model.SportsMatch != null && Model.SportsMatch.Id > 0) {
+    <form method="post"
+      asp-route-matchId="@Model.SportsMatch.Id"
+      asp-action="Create" asp-controller="MatchReviews">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group card-body">
+            <h3>Write a Review</h3>
+            <select class="form-control" asp-for="ReviewForm.ReviewRating">
+                <option value="1">1 - Bad Match!</option>
+                <option value="2">2 - Nothing Special</option>
+                <option value="3">3 - Solid</option>
+                <option value="4">4 - Very good match</option>
+                <option value="5">5 - True classic!</option>
+            </select>
+            <span asp-validation-for="ReviewForm.ReviewRating" class="text-danger"></span>
+
+        </div>
+        <div class="form-group card-body pt-0">
+            <input asp-for="ReviewForm.AuthorName" class="form-control" placeholder="Your name" />
+            <span asp-validation-for="ReviewForm.AuthorName" class="text-danger"></span>
+        </div> 
+        <div class="form-group card-body pt-0">
+            <textarea asp-for="ReviewForm.ReviewContent" class="form-control" placeholder="Analyze match in your words: tactics, subs, game decisions..."></textarea>
+            <span asp-validation-for="ReviewForm.ReviewContent" class="text-danger"></span>
+        </div>
+        <div class="card-body pt-0">
+            <button class="btn btn-primary">Post</button>
+        </div>
+    </form>
+}
+else
+{
+   <div>Please pass a valid sports match.</div>
+}
+</div>
