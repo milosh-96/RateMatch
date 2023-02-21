@@ -17,6 +17,23 @@ namespace RateMatch.Mvc.Data
 
         public List<SportsMatchVideoPost> SportsMatches { get; set; } = new List<SportsMatchVideoPost>();
 
+
+        public string GetVideoUrl()
+        {
+            if (Source == "YouTube")
+            {
+                if (VideoSourceUrl != null && VideoSourceUrl.Length > 0)
+                {
+                    if (VideoSourceUrl.StartsWith("https://www.youtube.com/watch?v="))
+                    {
+                        return VideoSourceUrl.Replace("watch?v=", "embed/");
+                    }
+                }
+            }
+            return this.VideoSourceUrl ?? "";
+        }
+
+
     }
     public class VideoPostDto
     {
