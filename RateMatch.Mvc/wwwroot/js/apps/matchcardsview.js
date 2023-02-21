@@ -67,8 +67,7 @@ class MatchItemCard extends React.Component {
                         <a href={this.props.item.url}>{this.props.item.matchName} {this.props.item.matchResult}</a>
                     </h5>
                
-                    <a href="#" className="btn btn-sm btn-primary">Reviews</a>
-                    <a href="#" className="btn btn-sm btn-primary">Match Highlights (external)</a>
+                    <a href={this.props.item.url} className="btn btn-sm btn-primary">Reviews</a>
                 </div>
             </div>);
             return output;

@@ -58,10 +58,7 @@ else
 //app.UseStatusCodePagesWithRedirects("/Error/{0}");
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-app.UseCookiePolicy(new CookiePolicyOptions()
-{
-    MinimumSameSitePolicy = SameSiteMode.None
-});
+app.UseCookiePolicy();
 app.UseRouting();
 
 app.UseAuthentication();
