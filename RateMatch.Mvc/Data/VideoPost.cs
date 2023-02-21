@@ -18,6 +18,13 @@ namespace RateMatch.Mvc.Data
         public List<SportsMatchVideoPost> SportsMatches { get; set; } = new List<SportsMatchVideoPost>();
 
     }
+    public class VideoPostDto
+    {
+        public string Title { get; set; } = "";
+        public string? VideoSourceUrl { get; set; }
+        public string Source { get; set; } = "Undefined";
+
+    }
 
     public class SportsMatchVideoPost
     {

@@ -154,6 +154,7 @@ namespace RateMatch.Mvc.Controllers
             {
                 return NotFound();
             }
+            sportsMatch.PlayedAt = sportsMatch.PlayedAt.ToLocalTime();
             return View(sportsMatch);
         }
 
